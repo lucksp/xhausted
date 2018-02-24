@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=Oswald:400");
+
+.oswald {
+  font-family: "Oswald", sans-serif;
+}
+
+.jumbotron {
+  min-height: 50vh;
+  background: url("../../public/assets/img/jumbo_traffic.jpg") no-repeat center
+    center;
+  background-size: cover;
+  padding-bottom: 0;
+  h1,
+  h2 {
+    color: $gray_1;
+  }
+}
+
+.button_group {
+  .btn {
+    margin: 0 8px;
+  }
+}
+
+@keyframes ani-mouse {
+  0% {
+    opacity: 1;
+    top: 29%;
+  }
+  15% {
+    opacity: 1;
+    top: 50%;
+  }
+  50% {
+    opacity: 0;
+    top: 72%;
+  }
+  100% {
+    opacity: 0;
+    top: 29%;
+  }
+}
+.scroll-btn {
+  text-align: center;
+  margin: 24px 0;
+  > *:hover,
+  > *:focus,
+  > *.active {
+    color: $gray_1;
+  }
+  > *:hover,
+  > *:focus,
+  > *:active,
+  > *.active {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+  }
+  > * {
+    display: inline-block;
+    line-height: 18px;
+    font-size: 13px;
+    font-weight: normal;
+    color: $gray_1;
+    letter-spacing: 2px;
+  }
+
+  .mouse {
+    position: relative;
+    display: block;
+    width: 35px;
+    height: 55px;
+    margin: 24px auto 8px;
+    box-sizing: border-box;
+    border: 3px solid white;
+    border-radius: 23px;
+
+    > * {
+      position: absolute;
+      display: block;
+      top: 29%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      margin: -4px 0 0 -4px;
+      background: white;
+      border-radius: 50%;
+      animation: ani-mouse 2.5s linear infinite;
+    }
+  }
+}

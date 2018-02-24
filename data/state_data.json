@@ -1,0 +1,233 @@
+[
+  {
+    "AL": {
+      "email": false,
+      "web": "http://www.alabamapublichealth.gov/about/contact.html"
+    }
+  },
+  {
+    "AK": { "email": false }
+  },
+  {
+    "AZ": { "email": false }
+  },
+  {
+    "AR": {
+      "email": false,
+      "web": "https://www.adeq.state.ar.us/complaints/forms/air_complaint.aspx"
+    }
+  },
+  {
+    "CA": {
+      "email": "envirotip@arb.ca.gov",
+      "web": "https://www.arb.ca.gov/enf/complaints/smoke.htm"
+    }
+  },
+  {
+    "CO": {
+      "email": "cdphe.smokeline@state.co.us",
+      "web": "https://www.colorado.gov/pacific/cdphe/smoking-vehicle-hotline"
+    }
+  },
+  {
+    "CT": {
+      "email": "deep.aircomplaints@ct.gov",
+      "web":
+        "http://www.ct.gov/deep/cwp/view.asp?a=2684&q=321758&deepNav_GID=1619"
+    }
+  },
+  {
+    "DE": { "email": "Delaware" }
+  },
+  {
+    "DC": { "email": "District Of Columbia" }
+  },
+  {
+    "FL": { "email": "Florida" }
+  },
+  {
+    "GA": { "email": "Georgia" }
+  },
+  {
+    "HI": { "email": "Hawaii" }
+  },
+  {
+    "ID": {
+      "email": false,
+      "web": "http://www.deq.idaho.gov/contact-us/environmental-concern/"
+    }
+  },
+  {
+    "IL": { "email": "Illinois" }
+  },
+  {
+    "IN": {
+      "email": false,
+      "web": "https://portal.idem.in.gov/complaintform/default.aspx"
+    }
+  },
+  {
+    "IA": { "email": "Iowa" }
+  },
+  {
+    "KS": {
+      "email": false,
+      "noStandards": true
+    }
+  },
+  {
+    "KY": { "email": "burnlaw@ky.gov" }
+  },
+  {
+    "LA": {
+      "email": "deqairfieldservices@la.gov",
+      "web": "http://deq.louisiana.gov/form/file-a-citizen-complaint"
+    }
+  },
+  {
+    "ME": { "email": "Maine" }
+  },
+  {
+    "MD": {
+      "email": false,
+      "web":
+        "http://mde.maryland.gov/programs/Air/MobileSources/Pages/Smoking.aspx"
+    }
+  },
+  {
+    "MA": {
+      "email": "ESF.Hotline@state.ma.us",
+      "web":
+        "http://www.mass.gov/eea/agencies/massdep/about/contacts/complaints/idling-or-smoky-vehicles.html"
+    }
+  },
+  {
+    "MI": { "email": "Michigan" }
+  },
+  {
+    "MN": { "email": "Minnesota" }
+  },
+  {
+    "MS": { "email": "Mississippi" }
+  },
+  {
+    "MO": { "email": "Missouri" }
+  },
+  {
+    "MT": { "email": "Montana" }
+  },
+  {
+    "NE": { "email": "NDEQ.problem@Nebraska.Gov" }
+  },
+  {
+    "NV": {
+      "email": false,
+      "web": "http://www.smogspotter.com/"
+    }
+  },
+  {
+    "NH": {
+      "email": "linda.magoon@des.nh.gov",
+      "web":
+        "https://www.des.nh.gov/organization/divisions/air/air-quality-complaints.htm"
+    }
+  },
+  {
+    "NJ": { "email": "New Jersey" }
+  },
+  {
+    "NM": { "email": "New Mexico" }
+  },
+  {
+    "NY": {
+      "email": false,
+      "web":
+        "https://www1.nyc.gov/apps/311universalintake/form.htm?serviceName=DEP+Air+Vehicle+Exhaust+Smoke"
+    }
+  },
+  {
+    "NC": {
+      "email": "DAQ.MSCB.publiccomplaints@ncdenr.gov",
+      "web": "https://deq.nc.gov/smoking-vehicle-compliant-form"
+    }
+  },
+  {
+    "ND": {
+      "email": "AirQuality@nd.gov",
+      "web": "https://deq.nd.gov/AQ/compliance/Complaints.aspx"
+    }
+  },
+  {
+    "OH": {
+      "email": "web.requests@epa.ohio.gov",
+      "web": "http://epa.ohio.gov/Contact.aspx#134907912-submit-a-complaint"
+    }
+  },
+  {
+    "OK": {
+      "email": false,
+      "noStandards": true
+    }
+  },
+  {
+    "OR": {
+      "email": "Oregon",
+      "web": "http://www.deq.state.or.us/complaints/dcomplaint.aspx"
+    }
+  },
+  {
+    "PA": { "email": "Pennsylvania" }
+  },
+  {
+    "RI": {
+      "email": "dem.compliance2@dem.ri.gov",
+      "web":
+        "http://www.dem.ri.gov/programs/complianceandinspection/air-pollution.php"
+    }
+  },
+  {
+    "SC": {
+      "email": "DAQ.MSCB.publiccomplaints@ncdenr.gov",
+      "web":
+        "https://deq.nc.gov/about/divisions/air-quality/motor-vehicles-air-quality/smoking-vehicle-complaint-form"
+    }
+  },
+  {
+    "SD": { "email": "South Dakota" }
+  },
+  {
+    "TN": { "email": "Tennessee" }
+  },
+  {
+    "TX": {
+      "email": false,
+      "web":
+        "http://www.mytxcar.org/SmokingVehicles/SmokingVehicleEnterSighting.dll"
+    }
+  },
+  {
+    "UT": {
+      "email": false,
+      "web":
+        "https://deq.utah.gov/ProgramsServices/programs/air/mobilesource/smokingcar.htm"
+    }
+  },
+  {
+    "VT": { "email": "Vermont" }
+  },
+  {
+    "VA": { "email": "Virginia" }
+  },
+  {
+    "WA": { "email": "Washington" }
+  },
+  {
+    "WV": { "email": false }
+  },
+  {
+    "WI": { "email": "Wisconsin" }
+  },
+  {
+    "WY": { "email": "Wyoming" }
+  }
+]
