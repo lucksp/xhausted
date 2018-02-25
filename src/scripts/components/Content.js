@@ -5,6 +5,12 @@ import ReportForm from "./ReportForm";
 class Content extends Component {
   constructor(props) {
     super(props);
+
+    this.buttonClick = this.buttonClick.bind(this);
+  }
+
+  buttonClick(buttonName) {
+    this.props.toggleActiveBtn(buttonName);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -21,29 +27,28 @@ class Content extends Component {
 
     const buttons = [
       {
-        value: "Report a Vehicle",
+        text: "Report a Vehicle",
         classes: "btn btn-lg btn-green-blue",
-        buttonName: "report"
+        buttonName: "report",
+        buttonType: "button"
       },
       {
-        value: "About",
+        text: "About",
         classes: "btn btn-lg btn-green-blue",
-        buttonName: "about"
+        buttonName: "about",
+        buttonType: "button"
       }
-      // {
-      //   value: "Contact",
-      //   classes: "btn"
-      // }
     ];
 
     let button = buttons.map((button, i) => {
       return (
         <Button
           key={i}
-          value={button.value}
+          text={button.text}
           classes={button.classes}
           buttonName={button.buttonName}
-          toggleActiveBtn={this.props.toggleActiveBtn}
+          buttonClick={this.buttonClick}
+          type={button.buttonType}
         />
       );
     });

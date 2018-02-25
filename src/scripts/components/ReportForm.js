@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from "../reusables/Button";
 
 class ReportForm extends Component {
   constructor(props) {
@@ -6,20 +7,36 @@ class ReportForm extends Component {
 
     this.stateSelected = this.stateSelected.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.submitForm = this.submitForm.bind(this);
 
     this.state = {
-      selectedState: null,
-      dropdownClose: true
+      selectedState: {
+        state: "",
+        contact: null
+      },
+      dropdownClose: true,
+      data: null
     };
   }
+
+  //TODO - add " has-danger" class to "form-group" elements that need to be required on submit
 
   componentWillMount() {
     this.fetchData();
   }
 
+  submitForm() {
+    debugger;
+  }
+
   stateSelected({ currentTarget }) {
+    let stateSelected = {
+      state: currentTarget.text,
+      contact: this.state.data[currentTarget.text]
+    };
+
     this.setState({
-      selectedState: currentTarget.text,
+      selectedState: stateSelected,
       dropdownClose: !this.state.dropdownClose
     });
   }
@@ -42,6 +59,25 @@ class ReportForm extends Component {
   }
 
   render() {
+    const showForm =
+      this.state.selectedState.state && this.state.selectedState.contact.email;
+    const showLink =
+      this.state.selectedState.state &&
+      !this.state.selectedState.contact.email &&
+      this.state.selectedState.contact.web;
+    const showEmpty =
+      this.state.selectedState.state &&
+      this.state.selectedState.contact.noStandards;
+
+    const buttons = [
+      {
+        text: "Submit",
+        classes: "btn btn-lg btn-green-blue",
+        buttonName: "submit",
+        buttonType: "submit"
+      }
+    ];
+
     return (
       <div className="container flex center column report-form">
         <h3>We make it easy to report a smoking vehicle</h3>
@@ -53,8 +89,8 @@ class ReportForm extends Component {
                 className="btn btn-lg btn-green-blue button-state-select"
                 onClick={this.toggleDropdown}
               >
-                {this.state.selectedState
-                  ? this.state.selectedState
+                {this.state.selectedState.state
+                  ? this.state.selectedState.state
                   : "Select Your State"}
               </button>
               <div
@@ -73,7 +109,7 @@ class ReportForm extends Component {
               </div>
             </div>
           )}
-          {this.state.selectedState && (
+          {showForm ? (
             <form>
               <fieldset className="field-set-contact">
                 <div className="form-group row">
@@ -86,7 +122,7 @@ class ReportForm extends Component {
                   <div className="col-sm-9">
                     <input
                       type="email"
-                      className="form-control"
+                      className="form-control form-control-danger"
                       id="inputEmail"
                       placeholder="Email"
                     />
@@ -170,12 +206,20 @@ class ReportForm extends Component {
               <p>And we never save or share your information</p>
               <div className="form-group row">
                 <div className="offset-sm-3 col-sm-9">
-                  <button type="submit" className="btn btn-primary">
-                    Sign in
-                  </button>
+                  <Button
+                    text={buttons[0].text}
+                    classes={buttons[0].classes}
+                    buttonName={buttons[0].buttonName}
+                    buttonClick={this.submitForm}
+                    type="submit"
+                  />
                 </div>
               </div>
             </form>
+          ) : showLink ? (
+            <h1>link</h1>
+          ) : (
+            showEmpty && <h1>nada</h1>
           )}
         </div>
       </div>
