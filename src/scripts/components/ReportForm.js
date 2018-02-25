@@ -3,95 +3,180 @@ import React, { Component } from "react";
 class ReportForm extends Component {
   constructor(props) {
     super(props);
+
+    this.stateSelected = this.stateSelected.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+
+    this.state = {
+      selectedState: null,
+      dropdownClose: true
+    };
+  }
+
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  stateSelected({ currentTarget }) {
+    this.setState({
+      selectedState: currentTarget.text,
+      dropdownClose: !this.state.dropdownClose
+    });
+  }
+
+  toggleDropdown() {
+    this.setState({ dropdownClose: !this.state.dropdownClose });
+  }
+
+  fetchData() {
+    fetch("/api/data")
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        this.setState({ data: json });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
       <div className="container flex center column report-form">
-        <h3>We make it easy to report a vehicle</h3>
-        <p>And we never save or share your information</p>
-        <div className="">
-          <form>
-            <div class="form-group row">
-              <label for="inputEmail" class="col-sm-2 col-form-label">
-                Email
-              </label>
-              <div class="col-sm-10">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="inputEmail"
-                  placeholder="Email"
-                />
+        <h3>We make it easy to report a smoking vehicle</h3>
+        <p>For your safety, please do not use this while driving!</p>
+        <div className="form-wrapper col-sm-8">
+          {this.state.data && (
+            <div className="dropdown-wrapper">
+              <button
+                className="btn btn-lg btn-green-blue button-state-select"
+                onClick={this.toggleDropdown}
+              >
+                {this.state.selectedState
+                  ? this.state.selectedState
+                  : "Select Your State"}
+              </button>
+              <div
+                className={
+                  "dropdown-content" +
+                  (!this.state.dropdownClose ? " open" : "")
+                }
+              >
+                {Object.keys(this.state.data).map((state, i) => {
+                  return (
+                    <a key={i} className="option" onClick={this.stateSelected}>
+                      {state}
+                    </a>
+                  );
+                })}
               </div>
             </div>
-            <div class="form-group row">
-              <label for="inputName" class="col-sm-2 col-form-label">
-                Name
-              </label>
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputName"
-                  placeholder="Your Name"
-                />
-              </div>
-            </div>
-            <fieldset class="form-group row">
-              <legend class="col-form-legend col-sm-2">Radios</legend>
-              <div class="col-sm-10">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="gridRadios"
-                      id="gridRadios1"
-                      value="option1"
-                      checked
-                    />
-                    Option one is this and that&mdash;be sure to include why
-                    it's great
+          )}
+          {this.state.selectedState && (
+            <form>
+              <fieldset className="field-set-contact">
+                <div className="form-group row">
+                  <label
+                    htmlFor="inputEmail"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Email
                   </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
+                  <div className="col-sm-9">
                     <input
-                      class="form-check-input"
-                      type="radio"
-                      name="gridRadios"
-                      id="gridRadios2"
-                      value="option2"
+                      type="email"
+                      className="form-control"
+                      id="inputEmail"
+                      placeholder="Email"
                     />
-                    Option two can be something else and selecting it will
-                    deselect option one
-                  </label>
+                  </div>
                 </div>
-                <div class="form-check disabled">
-                  <label class="form-check-label">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="gridRadios"
-                      id="gridRadios3"
-                      value="option3"
-                      disabled
-                    />
-                    Option three is disabled
+                <div className="form-group row">
+                  <label
+                    htmlFor="inputName"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Name
                   </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputName"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset className="field-set-vehicle">
+                <div className="form-group row">
+                  <label
+                    htmlFor="inputPlate"
+                    className="col-sm-3 col-form-label"
+                  >
+                    License Plate
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputPlate"
+                      placeholder="Vehicle Plate"
+                    />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label
+                    htmlFor="inputVehicle"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Vehicle Make/Model
+                  </label>
+                  <div className="col-sm-9">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputVehicle"
+                      placeholder="Vehicle Plate"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset className="field-set-other">
+                <div className="form-group row">
+                  <label className="col-sm-4">Submit as Anonymous??</label>
+                  <div className="col-sm-8">
+                    <div className="form-check">
+                      <label className="form-check-label">
+                        <input className="form-check-input" type="checkbox" />{" "}
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-sm-4">Receive a Copy?</label>
+                  <div className="col-sm-8">
+                    <div className="form-check">
+                      <label className="form-check-label">
+                        <input className="form-check-input" type="checkbox" />{" "}
+                        Yes
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <p>And we never save or share your information</p>
+              <div className="form-group row">
+                <div className="offset-sm-3 col-sm-9">
+                  <button type="submit" className="btn btn-primary">
+                    Sign in
+                  </button>
                 </div>
               </div>
-            </fieldset>
-
-            <div class="form-group row">
-              <div class="offset-sm-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">
-                  Sign in
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          )}
         </div>
       </div>
     );
