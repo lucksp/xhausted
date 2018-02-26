@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "../reusables/Button";
-import ReportForm from "./ReportForm";
+import Report from "./Report";
 
 class Content extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Content extends Component {
   render() {
     let content;
     if (this.props.activeComponent === "report") {
-      content = <ReportForm />;
+      content = <Report />;
     } else if (this.props.activeComponent === "about") {
       content = "Abouting";
     }
