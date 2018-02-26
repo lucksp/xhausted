@@ -1,13 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import Jumbo from "./Jumbo";
+import Content from "./Content";
 
-const Home = () => {
-  return (
-    <div>
-      <h1>Hello World</h1>
-      <Link to="/link">Test Link</Link>
-    </div>
-  );
-};
+class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggleActiveBtn = this.toggleActiveBtn.bind(this);
+
+    this.state = {
+      activeBtn: "report"
+    };
+  }
+
+  toggleActiveBtn(btn) {
+    this.setState({ activeBtn: btn });
+  }
+
+  render() {
+    return (
+      <div>
+        <Jumbo />
+        <Content
+          activeComponent={this.state.activeBtn}
+          toggleActiveBtn={this.toggleActiveBtn}
+        />
+      </div>
+    );
+  }
+}
 
 export default Home;

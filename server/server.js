@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const statesJson = require("../data/state_data.json");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,11 +26,11 @@ if (!process.env.NODE_ENV !== "production") {
 }
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.join(__dirname, "../path/index.html"));
 });
 
 app.get("/api/data", (req, res) => {
-  res.send("hi from server"); // replace me with real data
+  res.send(JSON.stringify(statesJson));
 });
 
 app.listen(port, function(err) {

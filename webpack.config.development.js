@@ -12,7 +12,7 @@ module.exports = {
     ]
   },
   output: {
-    filename: "[name].[hash].js",
+    filename: "[name]-bundle.js",
     path: __dirname,
     publicPath: "/"
   },
@@ -25,7 +25,7 @@ module.exports = {
         use: ["babel-loader"]
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
           {
             loader: "style-loader" // creates style nodes from JS strings
@@ -49,6 +49,15 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[path][name].[ext]"
+          }
+        }
       }
     ]
   },
