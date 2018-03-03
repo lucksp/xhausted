@@ -4,6 +4,39 @@ import Button from "../reusables/Button";
 class Form extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      formValues: {
+        email: "",
+        userName: "",
+        licensePlate: "",
+        vehicleType: "",
+        anonymous: "",
+        sendCopy: ""
+      }
+    };
+
+    this.submitForm = this.submitForm.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  submitForm(event) {
+    fetch("/api/form-submit-url", {
+      method: "POST",
+      body: data
+    });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    const newState = { ...this.state.formValues, [name]: value };
+
+    this.setState({
+      formValues: newState
+    });
   }
 
   render() {
@@ -24,10 +57,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="email"
                 type="email"
                 className="form-control form-control-danger"
                 id="inputEmail"
                 placeholder="Email"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -37,10 +72,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="userName"
                 type="text"
                 className="form-control"
                 id="inputName"
                 placeholder="Your Name"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -52,10 +89,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="licensePlate"
                 type="text"
                 className="form-control"
                 id="inputPlate"
                 placeholder="Vehicle Plate"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -65,10 +104,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="vehicleType"
                 type="text"
                 className="form-control"
                 id="inputVehicle"
-                placeholder="Vehicle Plate"
+                placeholder="Vehicle Type"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -79,7 +120,14 @@ class Form extends Component {
             <div className="col-sm-8">
               <div className="form-check">
                 <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" /> Yes
+                  <input
+                    name="anonymous"
+                    className="form-check-input"
+                    id="inputAnonymous"
+                    type="checkbox"
+                    onChange={this.handleInputChange}
+                  />{" "}
+                  Yes
                 </label>
               </div>
             </div>
@@ -89,7 +137,14 @@ class Form extends Component {
             <div className="col-sm-8">
               <div className="form-check">
                 <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" /> Yes
+                  <input
+                    name="sendCopy"
+                    className="form-check-input"
+                    id="inputReceiveCopy"
+                    type="checkbox"
+                    onChange={this.handleInputChange}
+                  />{" "}
+                  Yes
                 </label>
               </div>
             </div>
@@ -101,9 +156,10 @@ class Form extends Component {
             <Button
               text={buttons[0].text}
               classes={buttons[0].classes}
+              id="submitForm"
               buttonName={buttons[0].buttonName}
-              buttonClick={this.submitForm}
               type="submit"
+              buttonClick={this.submitForm}
             />
           </div>
         </div>

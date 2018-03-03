@@ -113,14 +113,16 @@ class Report extends Component {
         <div className="form-wrapper col-sm-8">
           {this.state.data && (
             <div className="dropdown-wrapper">
-              <button
-                className="btn btn-lg btn-green-blue button-state-select"
-                onClick={this.toggleDropdown}
-              >
-                {this.state.selectedState.state
-                  ? this.state.selectedState.state
-                  : "Select Your State"}
-              </button>
+              <Button
+                classes="btn btn-lg btn-green-blue button-state-select"
+                buttonClick={this.toggleDropdown}
+                text={
+                  this.state.selectedState.state
+                    ? this.state.selectedState.state
+                    : "Select Your State"
+                }
+                type="button"
+              />
               <div
                 className={
                   "dropdown-content" +
