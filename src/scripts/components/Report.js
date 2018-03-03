@@ -45,7 +45,6 @@ class Report extends Component {
       showType = "none";
     }
 
-    var t = showType;
     this.setState({
       selectedState: stateSelected,
       dropdownClose: !this.state.dropdownClose,
@@ -76,11 +75,18 @@ class Report extends Component {
         return <Form />;
       case "link":
         return (
-          <div>
-            <h5>
-              Your State does not have any email contact. We will direct you to
+          <div className="form-link-wrapper">
+            <p className="form-link-text">
+              Your State does not accept email submissions. Below is a link to
               their website which has a form that can be completed.
-            </h5>
+            </p>
+            <a
+              href={this.state.selectedState.contact.web}
+              target="_blank"
+              className="link-submit-web"
+            >
+              Link
+            </a>
           </div>
         );
       case "none":
@@ -100,8 +106,6 @@ class Report extends Component {
   }
 
   render() {
-    let showHere = this.showType();
-
     return (
       <div className="container flex center column report-form">
         <h3>We make it easy to report a smoking vehicle</h3>
@@ -133,7 +137,7 @@ class Report extends Component {
               </div>
             </div>
           )}
-          {showHere}
+          {this.state.selectedState.state && this.showType()}
         </div>
       </div>
     );
