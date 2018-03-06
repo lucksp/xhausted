@@ -22,6 +22,7 @@
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bootstrap": "4.0.0-alpha.6",
     "material-ui": "^1.0.0-beta.34",
     "nodemailer": "^4.6.0",

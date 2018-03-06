@@ -9,8 +9,10 @@ class Button extends Component {
     return (
       <button
         className={this.props.classes}
-        name={this.props.buttonName}
-        id={"button_" + this.props.buttonName}
+        name={this.props.buttonName ? this.props.buttonName : null}
+        id={
+          this.props.buttonName ? "button_" + this.props.buttonName : "button"
+        }
         role="button"
         onClick={
           this.props.buttonClick

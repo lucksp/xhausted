@@ -16,15 +16,35 @@ class Form extends Component {
       }
     };
 
-    this.submitForm = this.submitForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  submitForm(event) {
-    fetch("/api/form-submit-url", {
+  handleSubmit(event) {
+    event.preventDefault();
+
+    fetch("/api/sendData", {
       method: "POST",
-      body: data
-    });
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.formValues)
+    })
+      .then(response => {
+        if (response.status >= 400) {
+          throw new Error("error");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log("could not fetch parts");
+        console.log(err);
+        return { options: [] };
+      });
   }
 
   handleInputChange(event) {
@@ -49,7 +69,7 @@ class Form extends Component {
       }
     ];
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
           <div className="form-group row">
             <label htmlFor="inputEmail" className="col-sm-3 col-form-label">
@@ -157,9 +177,8 @@ class Form extends Component {
               text={buttons[0].text}
               classes={buttons[0].classes}
               id="submitForm"
-              buttonName={buttons[0].buttonName}
+              buttonName={null}
               type="submit"
-              buttonClick={this.submitForm}
             />
           </div>
         </div>
