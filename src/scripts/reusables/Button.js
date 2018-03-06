@@ -9,10 +9,18 @@ class Button extends Component {
     return (
       <button
         className={this.props.classes}
+        name={this.props.buttonName ? this.props.buttonName : null}
+        id={
+          this.props.buttonName ? "button_" + this.props.buttonName : "button"
+        }
         role="button"
-        onClick={e => {
-          this.props.buttonClick(this.props.buttonName);
-        }}
+        onClick={
+          this.props.buttonClick
+            ? event => {
+                this.props.buttonClick(event);
+              }
+            : null
+        }
       >
         {this.props.text}
       </button>

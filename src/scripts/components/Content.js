@@ -9,8 +9,8 @@ class Content extends Component {
     this.buttonClick = this.buttonClick.bind(this);
   }
 
-  buttonClick(buttonName) {
-    this.props.toggleActiveBtn(buttonName);
+  buttonClick(e) {
+    this.props.toggleActiveBtn(e.target.name);
   }
 
   shouldComponentUpdate(nextProps) {

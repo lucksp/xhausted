@@ -4,6 +4,59 @@ import Button from "../reusables/Button";
 class Form extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      formValues: {
+        email: "",
+        userName: "",
+        licensePlate: "",
+        vehicleType: "",
+        anonymous: "",
+        sendCopy: ""
+      }
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    fetch("/api/sendData", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.formValues)
+    })
+      .then(response => {
+        if (response.status >= 400) {
+          throw new Error("error");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log("could not fetch parts");
+        console.log(err);
+        return { options: [] };
+      });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    const newState = { ...this.state.formValues, [name]: value };
+
+    this.setState({
+      formValues: newState
+    });
   }
 
   render() {
@@ -16,7 +69,7 @@ class Form extends Component {
       }
     ];
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
           <div className="form-group row">
             <label htmlFor="inputEmail" className="col-sm-3 col-form-label">
@@ -24,10 +77,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="email"
                 type="email"
                 className="form-control form-control-danger"
                 id="inputEmail"
                 placeholder="Email"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -37,10 +92,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="userName"
                 type="text"
                 className="form-control"
                 id="inputName"
                 placeholder="Your Name"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -52,10 +109,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="licensePlate"
                 type="text"
                 className="form-control"
                 id="inputPlate"
                 placeholder="Vehicle Plate"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -65,10 +124,12 @@ class Form extends Component {
             </label>
             <div className="col-sm-9">
               <input
+                name="vehicleType"
                 type="text"
                 className="form-control"
                 id="inputVehicle"
-                placeholder="Vehicle Plate"
+                placeholder="Vehicle Type"
+                onChange={this.handleInputChange}
               />
             </div>
           </div>
@@ -79,7 +140,14 @@ class Form extends Component {
             <div className="col-sm-8">
               <div className="form-check">
                 <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" /> Yes
+                  <input
+                    name="anonymous"
+                    className="form-check-input"
+                    id="inputAnonymous"
+                    type="checkbox"
+                    onChange={this.handleInputChange}
+                  />{" "}
+                  Yes
                 </label>
               </div>
             </div>
@@ -89,7 +157,14 @@ class Form extends Component {
             <div className="col-sm-8">
               <div className="form-check">
                 <label className="form-check-label">
-                  <input className="form-check-input" type="checkbox" /> Yes
+                  <input
+                    name="sendCopy"
+                    className="form-check-input"
+                    id="inputReceiveCopy"
+                    type="checkbox"
+                    onChange={this.handleInputChange}
+                  />{" "}
+                  Yes
                 </label>
               </div>
             </div>
@@ -101,8 +176,8 @@ class Form extends Component {
             <Button
               text={buttons[0].text}
               classes={buttons[0].classes}
-              buttonName={buttons[0].buttonName}
-              buttonClick={this.submitForm}
+              id="submitForm"
+              buttonName={null}
               type="submit"
             />
           </div>
