@@ -8,7 +8,7 @@ class Report extends Component {
 
     this.stateSelected = this.stateSelected.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.resetOnSuccess = this.resetOnSuccess.bind(this);
 
     this.state = {
       selectedState: {
@@ -26,8 +26,8 @@ class Report extends Component {
     this.fetchData();
   }
 
-  submitForm() {
-    debugger;
+  resetOnSuccess() {
+    this.setState({ success: true });
   }
 
   stateSelected({ currentTarget }) {
@@ -72,7 +72,13 @@ class Report extends Component {
   showType() {
     switch (this.state.showType) {
       case "form":
-        return <Form toEmail={this.state.selectedState.contact.email} />;
+        return (
+          <Form
+            resetOnSuccess={this.resetOnSuccess}
+            toEmail={this.state.selectedState.contact.email}
+          />
+        );
+        break;
       case "link":
         return (
           <div className="form-link-wrapper">
@@ -89,6 +95,7 @@ class Report extends Component {
             </a>
           </div>
         );
+        break;
       case "none":
         return (
           <h5>
@@ -100,12 +107,16 @@ class Report extends Component {
             any questions.
           </h5>
         );
+        break;
       default:
         return null;
     }
   }
 
   render() {
+    if (this.state.success) {
+      return <h1>Success!</h1>;
+    }
     return (
       <div className="container flex center column report-form">
         <h3>We make it easy to report a smoking vehicle</h3>

@@ -14,8 +14,9 @@ class Form extends Component {
         vehicleType: "",
         vehicleLocation: "",
         anonymous: "",
-        sendCopy: ""
-      }
+        sendCopy: true
+      },
+      emailStatus: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +24,8 @@ class Form extends Component {
   }
 
   handleSubmit(event) {
+    console.log("setState pending");
+    this.setState({ emailStatus: "pending" });
     event.preventDefault();
     fetch("/api/sendData", {
       method: "POST",
@@ -40,12 +43,16 @@ class Form extends Component {
         return response.json();
       })
       .then(data => {
+        console.log("setState ok");
+        this.setState({ emailStatus: "ok" });
+        this.props.resetOnSuccess();
         console.log("then data: ", data);
       })
       .catch(err => {
-        console.log("could not post");
-        console.log(err);
-        return { options: [] };
+        console.log("setState err");
+        this.setState({ emailStatus: "err" });
+        console.warn("Error sending email", err);
+        return;
       });
   }
 
@@ -70,6 +77,9 @@ class Form extends Component {
         buttonType: "submit"
       }
     ];
+    if (this.state.emailStatus === "pending") {
+      return <h1>pending email....</h1>;
+    }
     return (
       <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
@@ -179,7 +189,7 @@ class Form extends Component {
                     className="form-check-input"
                     id="inputReceiveCopy"
                     type="checkbox"
-                    checked
+                    checked={this.state.formValues.sendCopy}
                     onChange={this.handleInputChange}
                   />{" "}
                   Yes
