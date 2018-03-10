@@ -72,7 +72,7 @@ class Report extends Component {
   showType() {
     switch (this.state.showType) {
       case "form":
-        return <Form />;
+        return <Form toEmail={this.state.selectedState.contact.email} />;
       case "link":
         return (
           <div className="form-link-wrapper">

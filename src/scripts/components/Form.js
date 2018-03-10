@@ -7,10 +7,12 @@ class Form extends Component {
 
     this.state = {
       formValues: {
-        email: "",
+        toEmail: this.props.toEmail,
+        fromEmail: "",
         userName: "",
         licensePlate: "",
         vehicleType: "",
+        vehicleLocation: "",
         anonymous: "",
         sendCopy: ""
       }
@@ -22,7 +24,6 @@ class Form extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     fetch("/api/sendData", {
       method: "POST",
       headers: {
@@ -32,16 +33,17 @@ class Form extends Component {
       body: JSON.stringify(this.state.formValues)
     })
       .then(response => {
+        console.log("server response", response);
         if (response.status >= 400) {
           throw new Error("error");
         }
         return response.json();
       })
       .then(data => {
-        console.log(data);
+        console.log("then data: ", data);
       })
       .catch(err => {
-        console.log("could not fetch parts");
+        console.log("could not post");
         console.log(err);
         return { options: [] };
       });
@@ -72,15 +74,15 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
           <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-3 col-form-label">
+            <label htmlFor="fromEmail" className="col-sm-3 col-form-label">
               Email
             </label>
             <div className="col-sm-9">
               <input
-                name="email"
+                name="fromEmail"
                 type="email"
                 className="form-control form-control-danger"
-                id="inputEmail"
+                id="fromEmail"
                 placeholder="Email"
                 onChange={this.handleInputChange}
               />
@@ -133,6 +135,21 @@ class Form extends Component {
               />
             </div>
           </div>
+          <div className="form-group row">
+            <label htmlFor="inputLocation" className="col-sm-3 col-form-label">
+              Location
+            </label>
+            <div className="col-sm-9">
+              <input
+                name="vehicleLocation"
+                type="text"
+                className="form-control"
+                id="inputLocation"
+                placeholder="Vehicle Location"
+                onChange={this.handleInputChange}
+              />
+            </div>
+          </div>
         </fieldset>
         <fieldset className="field-set-other">
           <div className="form-group row">
@@ -162,6 +179,7 @@ class Form extends Component {
                     className="form-check-input"
                     id="inputReceiveCopy"
                     type="checkbox"
+                    checked
                     onChange={this.handleInputChange}
                   />{" "}
                   Yes
