@@ -115,17 +115,17 @@ class Report extends Component {
 
   render() {
     if (this.state.success) {
-      return <h1>Success!</h1>;
+      return <h3 className="submit-success">Thank you for submitting!</h3>;
     }
     return (
       <div className="container flex center column report-form">
         <h3>We make it easy to report a smoking vehicle</h3>
         <p>For your safety, please do not use this while driving!</p>
-        <div className="form-wrapper col-sm-8">
+        <div className="form-wrapper flex center column col-sm-8">
           {this.state.data && (
             <div className="dropdown-wrapper">
               <Button
-                classes="btn btn-lg btn-green-blue button-state-select"
+                classes="btn btn-lg btn-green-blue dropdown-state-select"
                 buttonClick={this.toggleDropdown}
                 text={
                   this.state.selectedState.state
@@ -140,10 +140,10 @@ class Report extends Component {
                   (!this.state.dropdownClose ? " open" : "")
                 }
               >
-                {Object.keys(this.state.data).map((state, i) => {
+                {Object.keys(this.state.data).map((theState, i) => {
                   return (
                     <a key={i} className="option" onClick={this.stateSelected}>
-                      {state}
+                      {theState}
                     </a>
                   );
                 })}

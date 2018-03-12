@@ -16,14 +16,33 @@ class Form extends Component {
         anonymous: "",
         sendCopy: true
       },
-      emailStatus: ""
+      emailStatus: "",
+      okSubmit: {}
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEmailValidate = this.handleEmailValidate.bind(this);
+    this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
   }
 
   handleSubmit(event) {
+    if (this.state.emailStatus !== "") return;
+    if (!Object.keys(this.state.okSubmit).length) return false;
+
+    let findFalse;
+    Object.keys(this.state.okSubmit).find(ok => {
+      if (this.state.okSubmit[ok] === false) {
+        findFalse = true;
+        return;
+      }
+    });
+
+    if (findFalse) {
+      event.preventDefault();
+      return false;
+    }
+
     console.log("setState pending");
     this.setState({ emailStatus: "pending" });
     event.preventDefault();
@@ -56,7 +75,46 @@ class Form extends Component {
       });
   }
 
+  handleEmailValidate(event) {
+    const regex = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)/;
+
+    let valid = regex.test(event.target.value);
+
+    const newState = {
+      ...this.state.okSubmit,
+      validEmail: valid
+    };
+    this.setState({
+      okSubmit: newState
+    });
+  }
+
+  handleTextInputValidate(event) {
+    let inputStateName =
+      "valid" +
+      event.target.name.charAt(0).toUpperCase() +
+      event.target.name.slice(1);
+
+    let valid = false;
+    if (event.target.value.length) {
+      valid = true;
+    }
+    const newState = {
+      ...this.state.okSubmit,
+      [inputStateName]: valid
+    };
+    this.setState({
+      okSubmit: newState
+    });
+  }
+
   handleInputChange(event) {
+    if (event.target.name === "fromEmail") {
+      this.handleEmailValidate(event);
+    } else if (event.target.type === "text") {
+      this.handleTextInputValidate(event);
+    }
+
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -78,7 +136,7 @@ class Form extends Component {
       }
     ];
     if (this.state.emailStatus === "pending") {
-      return <h1>pending email....</h1>;
+      return <div className="loader" />;
     }
     return (
       <form onSubmit={this.handleSubmit}>
@@ -87,14 +145,24 @@ class Form extends Component {
             <label htmlFor="fromEmail" className="col-sm-3 col-form-label">
               Email
             </label>
-            <div className="col-sm-9">
+            <div
+              className={
+                "col-sm-9" +
+                (this.state.okSubmit.validEmail === true
+                  ? " has-success"
+                  : this.state.okSubmit.validEmail === false
+                    ? " has-danger"
+                    : "")
+              }
+            >
               <input
                 name="fromEmail"
                 type="email"
-                className="form-control form-control-danger"
+                className="form-control"
                 id="fromEmail"
                 placeholder="Email"
                 onChange={this.handleInputChange}
+                onBlur={this.handleEmailValidate}
               />
             </div>
           </div>
@@ -102,7 +170,16 @@ class Form extends Component {
             <label htmlFor="inputName" className="col-sm-3 col-form-label">
               Name
             </label>
-            <div className="col-sm-9">
+            <div
+              className={
+                "col-sm-9" +
+                (this.state.okSubmit.validUserName === true
+                  ? " has-success"
+                  : this.state.okSubmit.validUserName === false
+                    ? " has-danger"
+                    : "")
+              }
+            >
               <input
                 name="userName"
                 type="text"
@@ -110,6 +187,7 @@ class Form extends Component {
                 id="inputName"
                 placeholder="Your Name"
                 onChange={this.handleInputChange}
+                onBlur={this.handleTextInputValidate}
               />
             </div>
           </div>
@@ -119,7 +197,16 @@ class Form extends Component {
             <label htmlFor="inputPlate" className="col-sm-3 col-form-label">
               License Plate
             </label>
-            <div className="col-sm-9">
+            <div
+              className={
+                "col-sm-9" +
+                (this.state.okSubmit.validLicensePlate === true
+                  ? " has-success"
+                  : this.state.okSubmit.validLicensePlate === false
+                    ? " has-danger"
+                    : "")
+              }
+            >
               <input
                 name="licensePlate"
                 type="text"
@@ -127,6 +214,7 @@ class Form extends Component {
                 id="inputPlate"
                 placeholder="Vehicle Plate"
                 onChange={this.handleInputChange}
+                onBlur={this.handleTextInputValidate}
               />
             </div>
           </div>
@@ -134,7 +222,16 @@ class Form extends Component {
             <label htmlFor="inputVehicle" className="col-sm-3 col-form-label">
               Vehicle Make/Model
             </label>
-            <div className="col-sm-9">
+            <div
+              className={
+                "col-sm-9" +
+                (this.state.okSubmit.validVehicleType === true
+                  ? " has-success"
+                  : this.state.okSubmit.validVehicleType === false
+                    ? " has-danger"
+                    : "")
+              }
+            >
               <input
                 name="vehicleType"
                 type="text"
@@ -142,6 +239,7 @@ class Form extends Component {
                 id="inputVehicle"
                 placeholder="Vehicle Type"
                 onChange={this.handleInputChange}
+                onBlur={this.handleTextInputValidate}
               />
             </div>
           </div>
@@ -149,7 +247,16 @@ class Form extends Component {
             <label htmlFor="inputLocation" className="col-sm-3 col-form-label">
               Location
             </label>
-            <div className="col-sm-9">
+            <div
+              className={
+                "col-sm-9" +
+                (this.state.okSubmit.validVehicleLocation === true
+                  ? " has-success"
+                  : this.state.okSubmit.validVehicleLocation === false
+                    ? " has-danger"
+                    : "")
+              }
+            >
               <input
                 name="vehicleLocation"
                 type="text"
@@ -157,6 +264,7 @@ class Form extends Component {
                 id="inputLocation"
                 placeholder="Vehicle Location"
                 onChange={this.handleInputChange}
+                onBlur={this.handleTextInputValidate}
               />
             </div>
           </div>
@@ -200,7 +308,7 @@ class Form extends Component {
         </fieldset>
         <p>And we never save or share your information</p>
         <div className="form-group row">
-          <div className="offset-sm-3 col-sm-9">
+          <div className="col-sm-12 flex center">
             <Button
               text={buttons[0].text}
               classes={buttons[0].classes}
