@@ -17,7 +17,13 @@ class Form extends Component {
         sendCopy: true
       },
       emailStatus: "",
-      okSubmit: {}
+      okSubmit: {
+        fromEmail: null,
+        userName: null,
+        licensePlate: null,
+        vehicleType: null,
+        vehicleLocation: null
+      }
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,25 +33,19 @@ class Form extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     if (this.state.emailStatus !== "") return;
-    if (!Object.keys(this.state.okSubmit).length) return false;
 
-    let findFalse;
-    Object.keys(this.state.okSubmit).find(ok => {
-      if (this.state.okSubmit[ok] === false) {
-        findFalse = true;
-        return;
-      }
+    let findFalse = Object.keys(this.state.okSubmit).find(ok => {
+      return !this.state.okSubmit[ok];
     });
 
     if (findFalse) {
-      event.preventDefault();
       return false;
     }
 
     console.log("setState pending");
     this.setState({ emailStatus: "pending" });
-    event.preventDefault();
     fetch("/api/sendData", {
       method: "POST",
       headers: {
@@ -80,31 +80,19 @@ class Form extends Component {
 
     let valid = regex.test(event.target.value);
 
-    const newState = {
-      ...this.state.okSubmit,
-      validEmail: valid
-    };
     this.setState({
-      okSubmit: newState
+      okSubmit: { ...this.state.okSubmit, [event.target.name]: valid }
     });
   }
 
   handleTextInputValidate(event) {
-    let inputStateName =
-      "valid" +
-      event.target.name.charAt(0).toUpperCase() +
-      event.target.name.slice(1);
-
     let valid = false;
     if (event.target.value.length) {
       valid = true;
     }
-    const newState = {
-      ...this.state.okSubmit,
-      [inputStateName]: valid
-    };
+
     this.setState({
-      okSubmit: newState
+      okSubmit: { ...this.state.okSubmit, [event.target.name]: valid }
     });
   }
 
@@ -143,14 +131,14 @@ class Form extends Component {
         <fieldset className="field-set-contact">
           <div className="form-group row">
             <label htmlFor="fromEmail" className="col-sm-3 col-form-label">
-              Email
+              Email<sup className="required">*</sup>
             </label>
             <div
               className={
                 "col-sm-9" +
-                (this.state.okSubmit.validEmail === true
+                (this.state.okSubmit.fromEmail === true
                   ? " has-success"
-                  : this.state.okSubmit.validEmail === false
+                  : this.state.okSubmit.fromEmail === false
                     ? " has-danger"
                     : "")
               }
@@ -168,16 +156,14 @@ class Form extends Component {
           </div>
           <div className="form-group row">
             <label htmlFor="inputName" className="col-sm-3 col-form-label">
-              Name
+              Name<sup className="required">*</sup>
             </label>
             <div
               className={
                 "col-sm-9" +
-                (this.state.okSubmit.validUserName === true
+                (this.state.okSubmit.userName === true
                   ? " has-success"
-                  : this.state.okSubmit.validUserName === false
-                    ? " has-danger"
-                    : "")
+                  : this.state.okSubmit.userName === false ? " has-danger" : "")
               }
             >
               <input
@@ -195,14 +181,14 @@ class Form extends Component {
         <fieldset className="field-set-vehicle">
           <div className="form-group row">
             <label htmlFor="inputPlate" className="col-sm-3 col-form-label">
-              License Plate
+              License Plate<sup className="required">*</sup>
             </label>
             <div
               className={
                 "col-sm-9" +
-                (this.state.okSubmit.validLicensePlate === true
+                (this.state.okSubmit.licensePlate === true
                   ? " has-success"
-                  : this.state.okSubmit.validLicensePlate === false
+                  : this.state.okSubmit.licensePlate === false
                     ? " has-danger"
                     : "")
               }
@@ -220,14 +206,14 @@ class Form extends Component {
           </div>
           <div className="form-group row">
             <label htmlFor="inputVehicle" className="col-sm-3 col-form-label">
-              Vehicle Make/Model
+              Vehicle Make/Model<sup className="required">*</sup>
             </label>
             <div
               className={
                 "col-sm-9" +
-                (this.state.okSubmit.validVehicleType === true
+                (this.state.okSubmit.vehicleType === true
                   ? " has-success"
-                  : this.state.okSubmit.validVehicleType === false
+                  : this.state.okSubmit.vehicleType === false
                     ? " has-danger"
                     : "")
               }
@@ -250,9 +236,9 @@ class Form extends Component {
             <div
               className={
                 "col-sm-9" +
-                (this.state.okSubmit.validVehicleLocation === true
+                (this.state.okSubmit.vehicleLocation === true
                   ? " has-success"
-                  : this.state.okSubmit.validVehicleLocation === false
+                  : this.state.okSubmit.vehicleLocation === false
                     ? " has-danger"
                     : "")
               }

@@ -64,7 +64,26 @@
   .has-danger {
     .form-control {
       border-color: $red_fade_2;
+      &::-webkit-input-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &::-moz-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &:-ms-input-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &:-moz-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
     }
+  }
+  .required {
+    color: $red_fade_2;
   }
 }
 .loader,
