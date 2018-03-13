@@ -1,7 +1,9 @@
 @import "./variables.scss";
+
 @import "./button.scss";
-@import "./jumbo.scss";
 @import "./form.scss";
+@import "./footer.scss";
+@import "./jumbo.scss";
 
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,500");
 
@@ -27,11 +29,34 @@
     align-self: flex-start;
   }
 }
+nav {
+  .nav-item {
+    cursor: pointer;
+  }
+  .navbar-nav.right {
+    right: 0;
+    position: fixed;
+    align-self: center;
+  }
+}
 
-.content {
-  margin: 32px 0;
-  * {
-    font-weight: 300;
+.section-content {
+  min-height: calc(50vh - 140px);
+  .button-group {
+    button {
+      margin: 0 16px;
+    }
+  }
+  .btn-lg {
+    width: 240px;
+    border-radius: 0;
+  }
+
+  .content {
+    margin: 32px 0;
+    * {
+      font-weight: 300;
+    }
   }
 }
 

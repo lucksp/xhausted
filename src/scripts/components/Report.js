@@ -8,7 +8,6 @@ class Report extends Component {
 
     this.stateSelected = this.stateSelected.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.resetOnSuccess = this.resetOnSuccess.bind(this);
 
     this.state = {
       selectedState: {
@@ -20,14 +19,8 @@ class Report extends Component {
     };
   }
 
-  //TODO - add " has-danger" class to "form-group" elements that need to be required on submit
-
   componentWillMount() {
     this.fetchData();
-  }
-
-  resetOnSuccess() {
-    this.setState({ success: true });
   }
 
   stateSelected({ currentTarget }) {
@@ -74,7 +67,7 @@ class Report extends Component {
       case "form":
         return (
           <Form
-            resetOnSuccess={this.resetOnSuccess}
+            hasSuccess={this.props.hasSuccess}
             toEmail={this.state.selectedState.contact.email}
           />
         );
@@ -114,7 +107,7 @@ class Report extends Component {
   }
 
   render() {
-    if (this.state.success) {
+    if (this.props.success) {
       return <h3 className="submit-success">Thank you for submitting!</h3>;
     }
     return (

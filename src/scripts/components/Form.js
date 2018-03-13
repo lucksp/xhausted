@@ -64,7 +64,7 @@ class Form extends Component {
       .then(data => {
         console.log("setState ok");
         this.setState({ emailStatus: "ok" });
-        this.props.resetOnSuccess();
+        this.props.hasSuccess();
         console.log("then data: ", data);
       })
       .catch(err => {

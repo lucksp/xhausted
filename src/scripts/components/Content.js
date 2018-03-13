@@ -6,56 +6,36 @@ class Content extends Component {
   constructor(props) {
     super(props);
 
-    this.buttonClick = this.buttonClick.bind(this);
+    this.state = {
+      success: false
+    };
+
+    this.hasSuccess = this.hasSuccess.bind(this);
   }
 
-  buttonClick(e) {
-    this.props.toggleActiveBtn(e.target.name);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.activeLink === nextProps.activeLink && this.state.success) {
+      this.setState({ success: false });
+      return true;
+    }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.activeComponent !== nextProps.activeComponent;
+  hasSuccess() {
+    this.setState({ success: true });
   }
 
   render() {
     let content;
-    if (this.props.activeComponent === "report") {
-      content = <Report />;
-    } else if (this.props.activeComponent === "about") {
+    if (this.props.activeLink === "report") {
+      content = (
+        <Report hasSuccess={this.hasSuccess} success={this.state.success} />
+      );
+    } else if (this.props.activeLink === "about") {
       content = "Abouting";
     }
 
-    const buttons = [
-      {
-        text: "Report a Vehicle",
-        classes: "btn btn-lg btn-green-blue",
-        buttonName: "report",
-        buttonType: "button"
-      },
-      {
-        text: "About",
-        classes: "btn btn-lg btn-green-blue",
-        buttonName: "about",
-        buttonType: "button"
-      }
-    ];
-
-    let button = buttons.map((button, i) => {
-      return (
-        <Button
-          key={i}
-          text={button.text}
-          classes={button.classes}
-          buttonName={button.buttonName}
-          buttonClick={this.buttonClick}
-          type={button.buttonType}
-        />
-      );
-    });
-
     return (
-      <section>
-        <div className="button_group flex center">{button}</div>
+      <section className="section-content">
         <div className="content">{content}</div>
       </section>
     );
