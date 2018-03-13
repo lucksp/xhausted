@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "../reusables/Button";
+import About from "./About";
 import Report from "./Report";
 
 class Content extends Component {
@@ -31,7 +32,7 @@ class Content extends Component {
         <Report hasSuccess={this.hasSuccess} success={this.state.success} />
       );
     } else if (this.props.activeLink === "about") {
-      content = "Abouting";
+      content = <About />;
     }
 
     return (
