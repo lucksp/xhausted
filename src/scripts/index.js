@@ -3,8 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 
-import "../../node_modules/bootstrap/dist/css/bootstrap.css";
-import "../styles/style.scss";
+import bootstrapStyles from "../../node_modules/bootstrap/dist/css/bootstrap.css";
+import styles from "../styles/style.scss";
 
 const render = Component =>
   ReactDOM.render(

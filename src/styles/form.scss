@@ -13,8 +13,19 @@
     display: flex;
     justify-content: center;
 
-    .button-state-select {
+    .dropdown-state-select {
       cursor: pointer;
+      &:after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.3em;
+        vertical-align: middle;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-left: 0.3em solid transparent;
+      }
     }
 
     .dropdown-content {
@@ -24,7 +35,7 @@
       min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 100;
-      max-height: 25vh;
+      max-height: 20vh;
       overflow: scroll;
       cursor: pointer;
       a {
@@ -44,5 +55,74 @@
         }
       }
     }
+  }
+  .has-success {
+    .form-control {
+      border-color: $green_fade_2;
+    }
+  }
+  .has-danger {
+    .form-control {
+      border-color: $red_fade_2;
+      &::-webkit-input-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &::-moz-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &:-ms-input-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+      &:-moz-placeholder {
+        color: $red_fade_2;
+        font-style: italic;
+      }
+    }
+  }
+  .required {
+    color: $red_fade_2;
+  }
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  border-top: 1.1em solid $gray_1;
+  border-right: 1.1em solid $gray_1;
+  border-bottom: 1.1em solid $gray_1;
+  border-left: 1.1em solid $blue_fade_1;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

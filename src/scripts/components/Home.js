@@ -1,30 +1,32 @@
 import React, { Component } from "react";
 import Jumbo from "./Jumbo";
 import Content from "./Content";
+import Nav from "./Nav";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleActiveBtn = this.toggleActiveBtn.bind(this);
+    this.toggleActiveLink = this.toggleActiveLink.bind(this);
 
     this.state = {
-      activeBtn: "report"
+      activeLink: "report"
     };
   }
 
-  toggleActiveBtn(btn) {
-    this.setState({ activeBtn: btn });
+  toggleActiveLink(name) {
+    this.setState({ activeLink: name });
   }
 
   render() {
     return (
-      <div>
-        <Jumbo />
-        <Content
-          activeComponent={this.state.activeBtn}
-          toggleActiveBtn={this.toggleActiveBtn}
+      <div className="app-main">
+        <Nav
+          activeLink={this.state.activeLink}
+          toggleActiveLink={this.toggleActiveLink}
         />
+        <Jumbo />
+        <Content activeLink={this.state.activeLink} />
       </div>
     );
   }

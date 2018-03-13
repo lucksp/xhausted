@@ -8,7 +8,6 @@ class Report extends Component {
 
     this.stateSelected = this.stateSelected.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.submitForm = this.submitForm.bind(this);
 
     this.state = {
       selectedState: {
@@ -20,14 +19,8 @@ class Report extends Component {
     };
   }
 
-  //TODO - add " has-danger" class to "form-group" elements that need to be required on submit
-
   componentWillMount() {
     this.fetchData();
-  }
-
-  submitForm() {
-    debugger;
   }
 
   stateSelected({ currentTarget }) {
@@ -72,7 +65,13 @@ class Report extends Component {
   showType() {
     switch (this.state.showType) {
       case "form":
-        return <Form toEmail={this.state.selectedState.contact.email} />;
+        return (
+          <Form
+            hasSuccess={this.props.hasSuccess}
+            toEmail={this.state.selectedState.contact.email}
+          />
+        );
+        break;
       case "link":
         return (
           <div className="form-link-wrapper">
@@ -89,6 +88,7 @@ class Report extends Component {
             </a>
           </div>
         );
+        break;
       case "none":
         return (
           <h5>
@@ -100,21 +100,25 @@ class Report extends Component {
             any questions.
           </h5>
         );
+        break;
       default:
         return null;
     }
   }
 
   render() {
+    if (this.props.success) {
+      return <h3 className="submit-success">Thank you for submitting!</h3>;
+    }
     return (
       <div className="container flex center column report-form">
         <h3>We make it easy to report a smoking vehicle</h3>
         <p>For your safety, please do not use this while driving!</p>
-        <div className="form-wrapper col-sm-8">
+        <div className="form-wrapper flex center column col-sm-8">
           {this.state.data && (
             <div className="dropdown-wrapper">
               <Button
-                classes="btn btn-lg btn-green-blue button-state-select"
+                classes="btn btn-lg btn-green-blue dropdown-state-select"
                 buttonClick={this.toggleDropdown}
                 text={
                   this.state.selectedState.state
@@ -129,10 +133,10 @@ class Report extends Component {
                   (!this.state.dropdownClose ? " open" : "")
                 }
               >
-                {Object.keys(this.state.data).map((state, i) => {
+                {Object.keys(this.state.data).map((theState, i) => {
                   return (
                     <a key={i} className="option" onClick={this.stateSelected}>
-                      {state}
+                      {theState}
                     </a>
                   );
                 })}

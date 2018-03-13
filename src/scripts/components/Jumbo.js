@@ -2,7 +2,7 @@ import React from "react";
 
 const Jumbo = () => {
   return (
-    <section>
+    <section className="section-jumbo">
       <div className="flex end column jumbotron jumbotron-fluid">
         <div className="container">
           <h1 className="display-3 oswald">Every bit helps</h1>

@@ -52,9 +52,8 @@ app.post("/api/sendData", (req, res) => {
     // to: data.toEmail,
     to: "1.21gwprod@gmail.com", //** SWAP TO FIELD FOR PROD */
     cc: data.sendCopy ? data.fromEmail : null,
-    bcc: "xhaustdapp@gmail.com",
     subject: "Smoking Vehicle Submission",
-    replyTo: data.fromEmail,
+    replyTo: data.userName + "<" + data.fromEmail + ">",
     html:
       "<p>Hello.<br>" +
       "I'd like to " +
