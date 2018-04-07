@@ -70,8 +70,8 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      template: "public/index.html"
-      // favicon: "public/favicon.ico"
+      template: "public/index.html",
+      favicon: "public/assets/img/favicon.ico"
     }),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: ['vendor'],
