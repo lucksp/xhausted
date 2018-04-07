@@ -93,11 +93,10 @@ class Report extends Component {
         return (
           <h5>
             Unfortunately, your State does not have any contact information
-            available &/or does not have any emissions standards to require this
-            type of information be submitted about its vehicles. We apologize
-            for the inconvenience. We always recommends reaching out to your
-            local State Environmental or Public Health departments if you have
-            any questions.
+            available &/or does not have any State level emissions standards. We
+            apologize for the inconvenience. We always recommends reaching out
+            to your local State Environmental or Public Health departments if
+            you have any questions.
           </h5>
         );
         break;

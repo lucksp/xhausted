@@ -127,6 +127,7 @@ class Form extends Component {
       return <div className="loader" />;
     }
     return (
+      //TODO - add Description of emissions (black smoke, grey smoke, quantity of smoke, and when was the most smoke was observed – moving from a stop or while in motion traveling down the road, or at idle). About how long did the emissions last during observation (was it continuous, or heavier initially)
       <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
           <div className="form-group row">
