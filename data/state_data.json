@@ -3,8 +3,11 @@
     "email": false,
     "web": "http://www.alabamapublichealth.gov/about/contact.html"
   },
-  "AK": { "email": false },
-  "AZ": { "email": false },
+  "AK": {
+    "email": false,
+    "web": "https://dec.alaska.gov/Applications/Air/airtoolsweb/Complaints"
+  },
+  "AZ": { "email": false, "noStandards": true },
   "AR": {
     "email": false,
     "web": "https://www.adeq.state.ar.us/complaints/forms/air_complaint.aspx"
@@ -24,19 +27,19 @@
   },
   "DE": { "email": "Delaware" },
   "DC": { "email": "District Of Columbia" },
-  "FL": { "email": "Florida" },
+  "FL": { "email": false, "noStandards": true },
   "GA": { "email": "Georgia" },
-  "HI": { "email": "Hawaii" },
+  "HI": { "email": false, "noStandards": true },
   "ID": {
     "email": false,
-    "web": "http://www.deq.idaho.gov/contact-us/environmental-concern/"
+    "noStandards": true
   },
-  "IL": { "email": "Illinois" },
+  "IL": { "email": false, "noStandards": true },
   "IN": {
     "email": false,
     "web": "https://portal.idem.in.gov/complaintform/default.aspx"
   },
-  "IA": { "email": "Iowa" },
+  "IA": { "email": false, "noStandards": true },
   "KS": {
     "email": false,
     "noStandards": true
@@ -46,7 +49,7 @@
     "email": "deqairfieldservices@la.gov",
     "web": "http://deq.louisiana.gov/form/file-a-citizen-complaint"
   },
-  "ME": { "email": "Maine" },
+  "ME": { "email": false, "noStandards": true },
   "MD": {
     "email": false,
     "web":
@@ -59,10 +62,13 @@
   },
   "MI": { "email": "Michigan" },
   "MN": { "email": "Minnesota" },
-  "MS": { "email": "Mississippi" },
-  "MO": { "email": "Missouri" },
+  "MS": { "email": false, "noStandards": true },
+  "MO": { "email": false, "noStandards": true },
   "MT": { "email": "Montana" },
-  "NE": { "email": "NDEQ.problem@Nebraska.Gov" },
+  "NE": {
+    "email": false,
+    "noStandards": true
+  },
   "NV": {
     "email": false,
     "web": "http://www.smogspotter.com/"
@@ -72,7 +78,11 @@
     "web":
       "https://www.des.nh.gov/organization/divisions/air/air-quality-complaints.htm"
   },
-  "NJ": { "email": "New Jersey" },
+  "NJ": {
+    "email": false,
+    "noStandards": true,
+    "phone": "877-927-6337"
+  },
   "NM": { "email": "New Mexico" },
   "NY": {
     "email": false,
@@ -99,7 +109,10 @@
     "email": "Oregon",
     "web": "http://www.deq.state.or.us/complaints/dcomplaint.aspx"
   },
-  "PA": { "email": "Pennsylvania" },
+  "PA": {
+    "email": false,
+    "noStandards": true
+  },
   "RI": {
     "email": "dem.compliance2@dem.ri.gov",
     "web":
@@ -111,7 +124,7 @@
       "https://deq.nc.gov/about/divisions/air-quality/motor-vehicles-air-quality/smoking-vehicle-complaint-form"
   },
   "SD": { "email": "South Dakota" },
-  "TN": { "email": "Tennessee" },
+  "TN": { "email": false, "noStandards": true },
   "TX": {
     "email": false,
     "web":
@@ -122,10 +135,13 @@
     "web":
       "https://deq.utah.gov/ProgramsServices/programs/air/mobilesource/smokingcar.htm"
   },
-  "VT": { "email": "Vermont" },
+  "VT": { "email": false, "noStandards": true },
   "VA": { "email": "Virginia" },
-  "WA": { "email": "Washington" },
-  "WV": { "email": false },
+  "WA": {
+    "email": false,
+    "noStandards": true
+  },
+  "WV": { "email": false, "noStandards": true },
   "WI": { "email": "Wisconsin" },
-  "WY": { "email": "Wyoming" }
+  "WY": { "email": false, "noStandards": true }
 }
