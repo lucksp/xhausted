@@ -1,8 +1,8 @@
 {
-  "name": "react_webpack_boilerplate",
+  "name": "xhausted",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:lucksp/react_webpack_boilerplate.git",
+  "repository": "git@github.com:lucksp/xhausted.git",
   "author": "Phil Lucks <lucksp@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "node server/server.js",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js"
+    "build":
+      "webpack -p --config webpack.config.production.js && cross-env NODE_ENV=production node server/server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",

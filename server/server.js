@@ -8,8 +8,12 @@ const secretKeys = require("../secret_keys");
 
 const app = express();
 const port = process.env.PORT || 3000;
+console.log("** ENV = ", process.env.NODE_ENV);
 
-if (!process.env.NODE_ENV !== "production") {
+let useFolder;
+
+if (process.env.NODE_ENV !== "production") {
+  useFolder = "/public/";
   const webpack = require("webpack");
   const config = require("../webpack.config.development");
   const compiler = webpack(config);
@@ -27,10 +31,13 @@ if (!process.env.NODE_ENV !== "production") {
       heartbeat: 10 * 1000
     })
   );
+} else {
+  useFolder = "/dist/";
 }
+app.use(express.static("dist"));
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../path/index.html"));
+  res.sendFile(path.join(__dirname, ".." + useFolder + "index.html"));
 });
 
 app.get("/api/data", (req, res) => {
