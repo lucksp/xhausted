@@ -17,7 +17,7 @@
     "node"
   ],
   "scripts": {
-    "dev": "node server/server.js",
+    "dev": "NODE_ENV=development node server/server.js",
     "prebuild": "rimraf dist",
     "build":
       "webpack -p --config webpack.config.production.js && cross-env NODE_ENV=production node server/server.js"
