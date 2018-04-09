@@ -3,10 +3,26 @@ import React, { Component } from "react";
 class Nav extends Component {
   constructor(props) {
     super(props);
+
+    this.toggleCollapse = this.toggleCollapse.bind(this);
+
+    // this.state = {
+    //   collapse: true
+    // };
   }
 
   shouldComponentUpdate(nextProps) {
     return this.props.activeLink !== nextProps.activeLink;
+  }
+
+  toggleCollapse() {
+    let el = document.querySelector("#navbarNavAltMarkup");
+
+    if (el.classList.contains("collapse")) {
+      el.classList.remove("collapse");
+    } else {
+      el.classList.add("collapse");
+    }
   }
 
   render() {
@@ -49,6 +65,9 @@ class Nav extends Component {
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={event => {
+            this.toggleCollapse(event);
+          }}
         >
           <span className="navbar-toggler-icon" />
         </button>

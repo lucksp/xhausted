@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="about flex center column">
+    <div className="container about flex center column">
       <h2>About Xhaust'd</h2>
       <div className="container row">
         Living in Denver has its benefits, no doubt. But one of the oddities
