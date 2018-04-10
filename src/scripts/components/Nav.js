@@ -16,6 +16,12 @@ class Nav extends Component {
   }
 
   toggleCollapse() {
+    let menuTarget = document.querySelector(".navbar-toggler");
+    if (menuTarget.classList.contains("open")) {
+      menuTarget.classList.remove("open");
+    } else {
+      menuTarget.classList.add("open");
+    }
     let el = document.querySelector("#navbarNavAltMarkup");
 
     if (el.classList.contains("collapse")) {

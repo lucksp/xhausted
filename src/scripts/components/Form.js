@@ -23,13 +23,15 @@ class Form extends Component {
         licensePlate: null,
         vehicleType: null,
         vehicleLocation: null
-      }
+      },
+      disabled: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleEmailValidate = this.handleEmailValidate.bind(this);
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
+    this.validateHuman = this.validateHuman.bind(this);
   }
 
   handleSubmit(event) {
@@ -44,7 +46,6 @@ class Form extends Component {
       return false;
     }
 
-    console.log("setState pending");
     this.setState({ emailStatus: "pending" });
     fetch("/api/sendData", {
       method: "POST",
@@ -55,20 +56,16 @@ class Form extends Component {
       body: JSON.stringify(this.state.formValues)
     })
       .then(response => {
-        console.log("server response", response);
         if (response.status >= 400) {
           throw new Error("error");
         }
         return response.json();
       })
       .then(data => {
-        console.log("setState ok");
         this.setState({ emailStatus: "ok" });
         this.props.hasSuccess();
-        console.log("then data: ", data);
       })
       .catch(err => {
-        console.log("setState err");
         this.setState({ emailStatus: "err" });
         console.warn("Error sending email", err);
         return;
@@ -114,11 +111,19 @@ class Form extends Component {
     });
   }
 
+  validateHuman(e) {
+    if (e.target.value === "9") {
+      this.setState({ disabled: false });
+    }
+  }
+
   render() {
     const buttons = [
       {
         text: "Submit",
-        classes: "btn btn-lg btn-green-blue",
+        classes:
+          "btn btn-lg btn-green-blue" +
+          (this.state.disabled ? " disabled" : ""),
         buttonName: "submit",
         buttonType: "submit"
       }
@@ -294,6 +299,28 @@ class Form extends Component {
           </div>
         </fieldset>
         <p>And we never save or share your information</p>
+        <div className="form-group row">
+          <label
+            htmlFor="disabledValidation"
+            className="col-sm-3 col-form-label"
+          >
+            Human?
+          </label>
+          <div
+            className={
+              "col-sm-9" + (!this.state.disabled ? " has-success" : "")
+            }
+          >
+            <input
+              name="vehicleLocation"
+              type="text"
+              className="form-control"
+              id="disabledValidation"
+              placeholder="4 + 5 = ?"
+              onChange={this.validateHuman}
+            />
+          </div>
+        </div>
         <div className="form-group row">
           <div className="col-sm-12 flex center">
             <Button
