@@ -7,11 +7,10 @@ const statesJson = require("../data/state_data.json");
 const secretKeys = require("../secret_keys");
 
 const app = express();
-const port = process.env.PORT || 3000;
-console.log("** ENV = ", process.env.NODE_ENV);
+const port = process.env.NODE_ENV === "production" ? 80 : 3000;
 
 let useFolder;
-
+console.log("NOD_ENV: ", process.env.NODE_ENV);
 if (process.env.NODE_ENV !== "production") {
   useFolder = "/public/";
   const webpack = require("webpack");
