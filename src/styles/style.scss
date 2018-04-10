@@ -74,7 +74,7 @@ nav.navbar {
   }
 
   .content {
-    margin: 32px 0;
+    margin: 32px auto;
     * {
       font-weight: 300;
     }
@@ -83,6 +83,11 @@ nav.navbar {
 
 .submit-success {
   text-align: center;
+}
+
+.anchor-tag {
+  cursor: pointer;
+  color: $blue_fade_2;
 }
 
 @media all and (max-width: 990px) {

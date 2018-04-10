@@ -11,6 +11,7 @@ const port = process.env.NODE_ENV === "production" ? 80 : 3000;
 
 let useFolder;
 console.log("NOD_ENV: ", process.env.NODE_ENV);
+
 if (process.env.NODE_ENV !== "production") {
   useFolder = "/public/";
   const webpack = require("webpack");
@@ -82,6 +83,56 @@ app.post("/api/sendData", (req, res) => {
       "Thank you!<br>" +
       data.userName +
       "</p>"
+  };
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: secretKeys.email.user,
+      pass: secretKeys.email.pass
+    }
+  });
+
+  transporter.sendMail(mailOptions, function(err, info) {
+    if (err) console.log(err);
+    else console.log("successful email sent");
+    return res.status(200).send({
+      error: false,
+      data: info.reponse,
+      message: "You have submitted successfully"
+    });
+  });
+});
+
+app.post("/api/contact", (req, res) => {
+  const data = req.body;
+  if (!data) {
+    return res
+      .status(400)
+      .send({ error: true, message: "Please submit form with correct data." });
+  }
+
+  const mailOptions = {
+    from: data.fromEmail,
+    to: "xhaustdapp@gmail.com",
+    cc: data.fromEmail,
+    subject: "Xhaustd App Contact Form",
+    html:
+      "<p>Hello.<br>" +
+      "I am submitting information as a comment/question/concern:" +
+      "<ul>" +
+      "<li>" +
+      data.fromEmail +
+      "</li>" +
+      "<li>" +
+      data.userName +
+      "</li>" +
+      "<li>" +
+      data.contactInfo +
+      "</li>" +
+      "</ul>" +
+      "<p>Thank you.</p>" +
+      "<p>Xhaustd App will respond if required as soon as possible.</p>"
   };
 
   const transporter = nodemailer.createTransport({

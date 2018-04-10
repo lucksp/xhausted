@@ -42,6 +42,11 @@ class Nav extends Component {
         text: "About",
         classes: "nav-item nav-link",
         name: "about"
+      },
+      {
+        text: "Contact",
+        classes: "nav-item nav-link",
+        name: "contact"
       }
     ];
     const renderLinks = links.map((link, i) => {
