@@ -20,11 +20,12 @@
     "dev": "NODE_ENV=development node server/server.js",
     "prebuild": "rimraf dist",
     "build":
-      "webpack -p --config webpack.config.production.js && cross-env NODE_ENV=production node server/server.js"
+      "webpack -p --config webpack.config.production.js && cross-env NODE_ENV=production forever start server/server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "4.0.0-alpha.6",
+    "forever": "^0.15.3",
     "material-ui": "^1.0.0-beta.34",
     "nodemailer": "^4.6.0",
     "react": "^16.2.0",
