@@ -29,9 +29,25 @@
     align-self: flex-start;
   }
 }
-nav {
+nav.navbar {
+  .navbar-toggler {
+    cursor: pointer;
+    .navbar-toggler-icon {
+      transition: all 0.25s;
+    }
+    &.open {
+      .navbar-toggler-icon {
+        transform: rotate(90deg);
+      }
+    }
+    + .navbar-brand {
+      color: $pink_fade_2;
+      width: 80px;
+    }
+  }
   .navbar-nav {
     .nav-item {
+      padding-right: 16px;
       cursor: pointer;
       &.nav-link.active {
         color: $blue_fade_2;
@@ -78,7 +94,6 @@ nav {
         background-color: #f7f7f7;
         width: 100%;
         text-align: right;
-        padding: 8px;
       }
     }
   }

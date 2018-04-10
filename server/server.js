@@ -55,8 +55,10 @@ app.post("/api/sendData", (req, res) => {
 
   const mailOptions = {
     from: data.fromEmail,
-    // to: data.toEmail,
-    to: "1.21gwprod@gmail.com", //** SWAP TO FIELD FOR PROD */
+    to:
+      process.env.NODE_ENV === "production"
+        ? data.toEmail
+        : "1.21gwprod@gmail.com",
     cc: data.sendCopy ? data.fromEmail : null,
     subject: "Smoking Vehicle Submission",
     replyTo: data.userName + "<" + data.fromEmail + ">",
