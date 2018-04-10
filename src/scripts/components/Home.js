@@ -26,7 +26,10 @@ class Home extends Component {
           toggleActiveLink={this.toggleActiveLink}
         />
         <Jumbo />
-        <Content activeLink={this.state.activeLink} />
+        <Content
+          activeLink={this.state.activeLink}
+          toggleActiveLink={this.toggleActiveLink}
+        />
       </div>
     );
   }

@@ -91,13 +91,25 @@ class Report extends Component {
         break;
       case "none":
         return (
-          <h5>
-            Unfortunately, your State does not have any contact information
-            available &/or does not have any State level emissions standards. We
-            apologize for the inconvenience. We always recommends reaching out
-            to your local State Environmental or Public Health departments if
-            you have any questions.
-          </h5>
+          <div className="form-link-wrapper">
+            <p className="form-link-text">
+              Unfortunately, your selected State does not have any contact
+              information available &/or does not have any State level emissions
+              standards. We apologize for the inconvenience. We always
+              recommends reaching out to your local State Environmental or
+              Public Health departments if you have any questions. <br />
+              Additionally, you can{" "}
+              <span
+                className="anchor-tag"
+                onClick={() => {
+                  this.props.toggleActiveLink("contact");
+                }}
+              >
+                contact us
+              </span>{" "}
+              if you feel this information is outdated or incorrect.
+            </p>
+          </div>
         );
         break;
       default:
@@ -108,6 +120,12 @@ class Report extends Component {
   render() {
     if (this.props.success) {
       return <h3 className="submit-success">Thank you for submitting!</h3>;
+    } else if (this.props.err) {
+      return (
+        <h3 className="submit-success">
+          There was an error with your request, please submit again.
+        </h3>
+      );
     }
     return (
       <div className="container flex center column report-form">

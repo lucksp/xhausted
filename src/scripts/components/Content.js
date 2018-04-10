@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Button from "../reusables/Button";
 import About from "./About";
 import Report from "./Report";
+import Contact from "./Contact";
 
 class Content extends Component {
   constructor(props) {
@@ -29,10 +30,16 @@ class Content extends Component {
     let content;
     if (this.props.activeLink === "report") {
       content = (
-        <Report hasSuccess={this.hasSuccess} success={this.state.success} />
+        <Report
+          hasSuccess={this.hasSuccess}
+          success={this.state.success}
+          toggleActiveLink={this.props.toggleActiveLink}
+        />
       );
     } else if (this.props.activeLink === "about") {
       content = <About />;
+    } else if (this.props.activeLink === "contact") {
+      content = <Contact />;
     }
 
     return (
