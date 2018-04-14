@@ -13,6 +13,7 @@ class Form extends Component {
         licensePlate: "",
         vehicleType: "",
         vehicleLocation: "",
+        engineSelected: "",
         anonymous: "",
         sendCopy: true
       },
@@ -24,7 +25,8 @@ class Form extends Component {
         vehicleType: null,
         vehicleLocation: null
       },
-      disabled: true
+      disabled: true,
+      dropdownClose: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,6 +34,8 @@ class Form extends Component {
     this.handleEmailValidate = this.handleEmailValidate.bind(this);
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
     this.validateHuman = this.validateHuman.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.engineSelected = this.engineSelected.bind(this);
   }
 
   handleSubmit(event) {
@@ -108,6 +112,23 @@ class Form extends Component {
 
     this.setState({
       formValues: newState
+    });
+  }
+
+  toggleDropdown() {
+    this.setState({ dropdownClose: !this.state.dropdownClose });
+  }
+
+  engineSelected(event) {
+    this.toggleDropdown;
+    const newState = {
+      ...this.state.formValues,
+      engineSelected: event.target.text
+    };
+
+    this.setState({
+      formValues: newState,
+      dropdownClose: !this.state.dropdownClose
     });
   }
 
@@ -258,6 +279,38 @@ class Form extends Component {
                 onChange={this.handleInputChange}
                 onBlur={this.handleTextInputValidate}
               />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="engineType" className="col-sm-3 col-form-label">
+              Engine
+            </label>
+            <div className="dropdown-wrapper flex center">
+              <Button
+                id="engineType"
+                classes="btn-sml dropdown-engine-select"
+                buttonClick={this.toggleDropdown}
+                text={
+                  this.state.formValues.engineSelected
+                    ? this.state.formValues.engineSelected
+                    : "Engine Type"
+                }
+                type="button"
+              />
+              <div
+                className={
+                  "dropdown-content" +
+                  (!this.state.dropdownClose ? " open" : "")
+                }
+              >
+                {["Diesel", "Gasoline"].map((engine, i) => {
+                  return (
+                    <a key={i} className="option" onClick={this.engineSelected}>
+                      {engine}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </fieldset>
