@@ -54,6 +54,8 @@ app.post("/api/sendData", (req, res) => {
       .send({ error: true, message: "Please submit form with correct data." });
   }
 
+  console.log("data to send: ", data);
+
   const mailOptions = {
     from: data.fromEmail,
     to:
@@ -70,13 +72,18 @@ app.post("/api/sendData", (req, res) => {
       "submit this smoking vehicle report.  " +
       "Here is the information I have: <br>" +
       "<ul>" +
+      (data.date ? "<li>" + "Date: " + data.date + "</li>" : "") +
       "<li>" +
+      "License Plate: " +
       data.licensePlate +
       "</li>" +
       "<li>" +
+      "Vehicle Info: " +
       data.vehicleType +
       "</li>" +
+      (data.engineType ? "<li>" + "Engine: " + data.engineType + "</li>" : "") +
       "<li>" +
+      "Location: " +
       data.vehicleLocation +
       "</li>" +
       "</ul>" +
@@ -95,7 +102,7 @@ app.post("/api/sendData", (req, res) => {
 
   transporter.sendMail(mailOptions, function(err, info) {
     if (err) console.log(err);
-    else console.log("successful email sent");
+    else console.log("successful email sent: ", mailOptions);
     return res.status(200).send({
       error: false,
       data: info.reponse,
