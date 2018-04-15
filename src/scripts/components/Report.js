@@ -135,10 +135,7 @@ class Report extends Component {
           {this.state.data && (
             <div className="dropdown-wrapper">
               <Button
-                classes={
-                  "btn btn-lg btn-green-blue dropdown-state-select" +
-                  (!this.state.dropdownClose ? " open" : "")
-                }
+                classes="btn btn-lg btn-green-blue dropdown-state-select"
                 buttonClick={this.toggleDropdown}
                 text={
                   this.state.selectedState.state
