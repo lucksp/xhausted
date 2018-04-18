@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import Button from "../reusables/Button";
 
+import DayPickerInput from "react-day-picker/DayPickerInput";
+
+import format from "date-fns/format";
+import parse from "date-fns/parse";
+
+import "react-day-picker/lib/style.css";
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -8,11 +15,13 @@ class Form extends Component {
     this.state = {
       formValues: {
         toEmail: this.props.toEmail,
+        date: "",
         fromEmail: "",
         userName: "",
         licensePlate: "",
         vehicleType: "",
         vehicleLocation: "",
+        engineType: "-- Select Your Engine --",
         anonymous: "",
         sendCopy: true
       },
@@ -32,6 +41,13 @@ class Form extends Component {
     this.handleEmailValidate = this.handleEmailValidate.bind(this);
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
     this.validateHuman = this.validateHuman.bind(this);
+    this.handleDatePicker = this.handleDatePicker.bind(this);
+  }
+
+  componentDidMount() {
+    let DayPickerInput = document
+      .querySelector(".DayPickerInput input")
+      .classList.add("form-control");
   }
 
   handleSubmit(event) {
@@ -111,6 +127,19 @@ class Form extends Component {
     });
   }
 
+  handleDatePicker(day) {
+    let formattedDate = new Date(day).toLocaleDateString();
+
+    const newState = {
+      ...this.state.formValues,
+      date: formattedDate
+    };
+
+    this.setState({
+      formValues: newState
+    });
+  }
+
   validateHuman(e) {
     if (e.target.value === "9") {
       this.setState({ disabled: false });
@@ -128,6 +157,11 @@ class Form extends Component {
         buttonType: "submit"
       }
     ];
+    const engineDrops = {
+      "-- Select Your Engine --": "disabled",
+      Gasoline: "enabled",
+      Diesel: "enabled"
+    };
     if (this.state.emailStatus === "pending") {
       return <div className="loader" />;
     }
@@ -136,12 +170,12 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
         <fieldset className="field-set-contact">
           <div className="form-group row">
-            <label htmlFor="fromEmail" className="col-sm-3 col-form-label">
+            <label htmlFor="fromEmail" className="col-sm-4 col-form-label">
               Email<sup className="required">*</sup>
             </label>
             <div
               className={
-                "col-sm-9" +
+                "col-sm-8" +
                 (this.state.okSubmit.fromEmail === true
                   ? " has-success"
                   : this.state.okSubmit.fromEmail === false
@@ -161,12 +195,12 @@ class Form extends Component {
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="inputName" className="col-sm-3 col-form-label">
+            <label htmlFor="inputName" className="col-sm-4 col-form-label">
               Name<sup className="required">*</sup>
             </label>
             <div
               className={
-                "col-sm-9" +
+                "col-sm-8" +
                 (this.state.okSubmit.userName === true
                   ? " has-success"
                   : this.state.okSubmit.userName === false ? " has-danger" : "")
@@ -186,12 +220,12 @@ class Form extends Component {
         </fieldset>
         <fieldset className="field-set-vehicle">
           <div className="form-group row">
-            <label htmlFor="inputPlate" className="col-sm-3 col-form-label">
+            <label htmlFor="inputPlate" className="col-sm-4 col-form-label">
               License Plate<sup className="required">*</sup>
             </label>
             <div
               className={
-                "col-sm-9" +
+                "col-sm-8" +
                 (this.state.okSubmit.licensePlate === true
                   ? " has-success"
                   : this.state.okSubmit.licensePlate === false
@@ -211,12 +245,12 @@ class Form extends Component {
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="inputVehicle" className="col-sm-3 col-form-label">
+            <label htmlFor="inputVehicle" className="col-sm-4 col-form-label">
               Vehicle Make/Model<sup className="required">*</sup>
             </label>
             <div
               className={
-                "col-sm-9" +
+                "col-sm-8" +
                 (this.state.okSubmit.vehicleType === true
                   ? " has-success"
                   : this.state.okSubmit.vehicleType === false
@@ -236,12 +270,12 @@ class Form extends Component {
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="inputLocation" className="col-sm-3 col-form-label">
+            <label htmlFor="inputLocation" className="col-sm-4 col-form-label">
               Location
             </label>
             <div
               className={
-                "col-sm-9" +
+                "col-sm-8" +
                 (this.state.okSubmit.vehicleLocation === true
                   ? " has-success"
                   : this.state.okSubmit.vehicleLocation === false
@@ -257,6 +291,46 @@ class Form extends Component {
                 placeholder="Vehicle Location"
                 onChange={this.handleInputChange}
                 onBlur={this.handleTextInputValidate}
+              />
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="engineType" className="col-sm-4 col-form-label">
+              Engine
+            </label>
+            <select
+              className="dropdown-engine-select form-control"
+              value={this.state.formValues.engineType}
+              name="engineType"
+              onChange={this.handleInputChange}
+            >
+              {Object.keys(engineDrops).map(function(name, index) {
+                return (
+                  <option
+                    key={index}
+                    value={name}
+                    disabled={engineDrops[name] === "disabled" ? true : null}
+                  >
+                    {name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="inputDate" className="col-sm-4 col-form-label">
+              Date
+            </label>
+            <div className="col-sm-8">
+              <DayPickerInput
+                className="form-control"
+                format="M/D/YYYY"
+                placeholder="MM/DD/YYYY"
+                name="date"
+                className="form-control"
+                onDayChange={day => {
+                  this.handleDatePicker(day);
+                }}
               />
             </div>
           </div>
@@ -302,13 +376,13 @@ class Form extends Component {
         <div className="form-group row">
           <label
             htmlFor="disabledValidation"
-            className="col-sm-3 col-form-label"
+            className="col-sm-4 col-form-label"
           >
             Human?
           </label>
           <div
             className={
-              "col-sm-9" + (!this.state.disabled ? " has-success" : "")
+              "col-sm-8" + (!this.state.disabled ? " has-success" : "")
             }
           >
             <input

@@ -61,7 +61,7 @@ app.post("/api/sendData", (req, res) => {
         ? data.toEmail
         : "1.21gwprod@gmail.com",
     cc: data.sendCopy ? data.fromEmail : null,
-    subject: "Smoking Vehicle Submission",
+    subject: "Smoking Vehicle Submission - Plate#: " + data.licensePlate,
     replyTo: data.userName + "<" + data.fromEmail + ">",
     html:
       "<p>Hello.<br>" +
@@ -70,15 +70,20 @@ app.post("/api/sendData", (req, res) => {
       "submit this smoking vehicle report.  " +
       "Here is the information I have: <br>" +
       "<ul>" +
+      (data.date ? "<li>" + "Date: " + data.date + "</li>" : "") +
       "<li>" +
+      "License Plate: " +
       data.licensePlate +
       "</li>" +
       "<li>" +
+      "Vehicle Info: " +
       data.vehicleType +
       "</li>" +
       "<li>" +
+      "Location: " +
       data.vehicleLocation +
       "</li>" +
+      (data.engineType ? "<li>" + "Engine: " + data.engineType + "</li>" : "") +
       "</ul>" +
       "Thank you!<br>" +
       data.userName +
@@ -94,6 +99,7 @@ app.post("/api/sendData", (req, res) => {
   });
 
   transporter.sendMail(mailOptions, function(err, info) {
+    console.log(mailOptions);
     if (err) console.log(err);
     else console.log("successful email sent");
     return res.status(200).send({
