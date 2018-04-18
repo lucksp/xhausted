@@ -2,14 +2,6 @@
   cursor: pointer;
 }
 
-.button-simple {
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  &:hover {
-    background-color: $gray_1;
-  }
-}
-
 .btn-green-blue {
   background-color: $green_fade_1;
   border: 2px solid $blue_fade_2;

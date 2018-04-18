@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "../reusables/Button";
+
 import DayPickerInput from "react-day-picker/DayPickerInput";
 
 import format from "date-fns/format";
@@ -14,9 +15,9 @@ class Form extends Component {
     this.state = {
       formValues: {
         toEmail: this.props.toEmail,
+        date: "",
         fromEmail: "",
         userName: "",
-        date: "",
         licensePlate: "",
         vehicleType: "",
         vehicleLocation: "",
@@ -39,8 +40,8 @@ class Form extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleEmailValidate = this.handleEmailValidate.bind(this);
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
-    this.handleDatePicker = this.handleDatePicker.bind(this);
     this.validateHuman = this.validateHuman.bind(this);
+    this.handleDatePicker = this.handleDatePicker.bind(this);
   }
 
   componentDidMount() {
@@ -245,7 +246,7 @@ class Form extends Component {
           </div>
           <div className="form-group row">
             <label htmlFor="inputVehicle" className="col-sm-4 col-form-label">
-              Vehicle Info<sup className="required">*</sup>
+              Vehicle Make/Model<sup className="required">*</sup>
             </label>
             <div
               className={
@@ -262,7 +263,7 @@ class Form extends Component {
                 type="text"
                 className="form-control"
                 id="inputVehicle"
-                placeholder="Vehicle Make/Model"
+                placeholder="Vehicle Type"
                 onChange={this.handleInputChange}
                 onBlur={this.handleTextInputValidate}
               />
@@ -375,13 +376,13 @@ class Form extends Component {
         <div className="form-group row">
           <label
             htmlFor="disabledValidation"
-            className="col-sm-3 col-form-label"
+            className="col-sm-4 col-form-label"
           >
             Human?
           </label>
           <div
             className={
-              "col-sm-9" + (!this.state.disabled ? " has-success" : "")
+              "col-sm-8" + (!this.state.disabled ? " has-success" : "")
             }
           >
             <input

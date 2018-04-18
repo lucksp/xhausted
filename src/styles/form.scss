@@ -20,7 +20,7 @@
 
     .dropdown-state-select {
       cursor: pointer;
-      &:not(.open):after {
+      &:after {
         display: inline-block;
         width: 0;
         height: 0;
@@ -30,19 +30,6 @@
         border-top: 0.3em solid;
         border-right: 0.3em solid transparent;
         border-left: 0.3em solid transparent;
-      }
-      &.open {
-        &:after {
-          display: inline-block;
-          width: 0;
-          height: 0;
-          margin-left: 0.3em;
-          vertical-align: middle;
-          content: "";
-          border-right: 0.3em solid transparent;
-          border-left: 0.3em solid transparent;
-          border-bottom: 0.3em solid;
-        }
       }
     }
 
