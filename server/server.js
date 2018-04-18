@@ -63,7 +63,7 @@ app.post("/api/sendData", (req, res) => {
         ? data.toEmail
         : "1.21gwprod@gmail.com",
     cc: data.sendCopy ? data.fromEmail : null,
-    subject: "Smoking Vehicle Submission",
+    subject: "Smoking Vehicle Submission - Plate#: " + data.licensePlate,
     replyTo: data.userName + "<" + data.fromEmail + ">",
     html:
       "<p>Hello.<br>" +
