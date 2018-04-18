@@ -20,7 +20,7 @@ class Form extends Component {
         licensePlate: "",
         vehicleType: "",
         vehicleLocation: "",
-        engineType: "",
+        engineType: "-- Select Your Engine --",
         anonymous: "",
         sendCopy: true
       },
@@ -32,8 +32,7 @@ class Form extends Component {
         vehicleType: null,
         vehicleLocation: null
       },
-      disabled: true,
-      dropdownClose: true
+      disabled: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,8 +41,6 @@ class Form extends Component {
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
     this.handleDatePicker = this.handleDatePicker.bind(this);
     this.validateHuman = this.validateHuman.bind(this);
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.engineType = this.engineType.bind(this);
   }
 
   componentDidMount() {
@@ -129,23 +126,6 @@ class Form extends Component {
     });
   }
 
-  toggleDropdown() {
-    this.setState({ dropdownClose: !this.state.dropdownClose });
-  }
-
-  engineType(event) {
-    this.toggleDropdown;
-    const newState = {
-      ...this.state.formValues,
-      engineType: event.target.text
-    };
-
-    this.setState({
-      formValues: newState,
-      dropdownClose: !this.state.dropdownClose
-    });
-  }
-
   handleDatePicker(day) {
     let formattedDate = new Date(day).toLocaleDateString();
 
@@ -176,6 +156,11 @@ class Form extends Component {
         buttonType: "submit"
       }
     ];
+    const engineDrops = {
+      "-- Select Your Engine --": "disabled",
+      Gasoline: "enabled",
+      Diesel: "enabled"
+    };
     if (this.state.emailStatus === "pending") {
       return <div className="loader" />;
     }
@@ -309,6 +294,29 @@ class Form extends Component {
             </div>
           </div>
           <div className="form-group row">
+            <label htmlFor="engineType" className="col-sm-4 col-form-label">
+              Engine
+            </label>
+            <select
+              className="dropdown-engine-select form-control"
+              value={this.state.formValues.engineType}
+              name="engineType"
+              onChange={this.handleInputChange}
+            >
+              {Object.keys(engineDrops).map(function(name, index) {
+                return (
+                  <option
+                    key={index}
+                    value={name}
+                    disabled={engineDrops[name] === "disabled" ? true : null}
+                  >
+                    {name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group row">
             <label htmlFor="inputDate" className="col-sm-4 col-form-label">
               Date
             </label>
@@ -403,39 +411,3 @@ class Form extends Component {
 }
 
 export default Form;
-
-// <div className="form-group row">
-// <label htmlFor="engineType" className="col-sm-4 col-form-label">
-//   Engine
-// </label>
-// <div className="dropdown-wrapper flex center">
-//   <Button
-//     id="engineType"
-//     classes={
-//       "btn-sml button-simple dropdown-engine-select" +
-//       (!this.state.dropdownClose ? " open" : "")
-//     }
-//     buttonClick={this.toggleDropdown}
-//     text={
-//       this.state.formValues.engineType
-//         ? this.state.formValues.engineType
-//         : "Engine Type"
-//     }
-//     type="button"
-//   />
-//   <div
-//     className={
-//       "dropdown-content" +
-//       (!this.state.dropdownClose ? " open" : "")
-//     }
-//   >
-//     {["Diesel", "Gasoline"].map((engine, i) => {
-//       return (
-//         <a key={i} className="option" onClick={this.engineType}>
-//           {engine}
-//         </a>
-//       );
-//     })}
-//   </div>
-// </div>
-// </div>
