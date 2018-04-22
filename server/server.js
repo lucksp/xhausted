@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.NODE_ENV === "production" ? 80 : 3000;
 
 let useFolder;
-console.log("NOD_ENV: ", process.env.NODE_ENV);
+console.log("NODE_ENV: ", process.env.NODE_ENV);
 
 if (process.env.NODE_ENV !== "production") {
   useFolder = "/public/";
