@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "NODE_ENV=development node server/server.js",
     "prebuild": "rimraf dist",
-    "build": "webpack -p --config webpack.config.production.js && cross-env NODE_ENV=production pm2 start node server/server.js"
+    "build":
+      "webpack --colors --config webpack.config.production.js && cross-env NODE_ENV=production node server/server.js"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
