@@ -20,7 +20,7 @@
     "dev": "NODE_ENV=development node server/server.js",
     "prebuild": "rimraf dist",
     "build":
-      "webpack --colors --config webpack.config.production.js && cross-env NODE_ENV=production node server/server.js"
+      "webpack --colors --config webpack.config.production.js && cross-env NODE_ENV=production pm2 start server/server.js --name 'app'"
   },
   "dependencies": {
     "babel-core": "^6.26.0",

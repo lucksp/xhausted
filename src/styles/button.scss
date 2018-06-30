@@ -7,3 +7,14 @@
   border: 2px solid $blue_fade_2;
   color: #fff;
 }
+
+.btn-gray {
+  background-color: #fff;
+  border: 2px solid $gray_2;
+  color: $gray_3;
+}
+
+.btn-fine {
+  border-radius: 0;
+  border-width: 1px;
+}

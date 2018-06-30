@@ -8,6 +8,7 @@ class Button extends Component {
   render() {
     return (
       <button
+        type={this.props.type}
         className={this.props.classes}
         name={this.props.buttonName ? this.props.buttonName : null}
         id={
