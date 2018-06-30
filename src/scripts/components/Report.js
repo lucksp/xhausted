@@ -14,7 +14,7 @@ class Report extends Component {
         state: "",
         contact: null
       },
-      dropdownClose: true,
+      dropdownOpen: false,
       data: null
     };
   }
@@ -40,13 +40,13 @@ class Report extends Component {
 
     this.setState({
       selectedState: stateSelected,
-      dropdownClose: !this.state.dropdownClose,
+      dropdownOpen: !this.state.dropdownOpen,
       showType: showType
     });
   }
 
   toggleDropdown() {
-    this.setState({ dropdownClose: !this.state.dropdownClose });
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
   fetchData() {
@@ -135,7 +135,8 @@ class Report extends Component {
           {this.state.data && (
             <div className="dropdown-wrapper">
               <Button
-                classes="btn btn-lg btn-green-blue dropdown-state-select"
+                classes="btn btn-lg btn-green-blue dropdown-select button-state"
+                buttonName="state"
                 buttonClick={this.toggleDropdown}
                 text={
                   this.state.selectedState.state
@@ -144,20 +145,21 @@ class Report extends Component {
                 }
                 type="button"
               />
-              <div
-                className={
-                  "dropdown-content" +
-                  (!this.state.dropdownClose ? " open" : "")
-                }
-              >
-                {Object.keys(this.state.data).map((theState, i) => {
-                  return (
-                    <a key={i} className="option" onClick={this.stateSelected}>
-                      {theState}
-                    </a>
-                  );
-                })}
-              </div>
+              {this.state.dropdownOpen && (
+                <div className={"dropdown-content state"}>
+                  {Object.keys(this.state.data).map((theState, i) => {
+                    return (
+                      <a
+                        key={i}
+                        className="option"
+                        onClick={this.stateSelected}
+                      >
+                        {theState}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
           {this.state.selectedState.state && this.showType()}

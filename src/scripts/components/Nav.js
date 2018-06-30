@@ -82,8 +82,8 @@ class Nav extends Component {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <a className="navbar-brand" href="/">
-          Xhuast'd
+        <a className="navbar-brand oswald" href="/">
+          Xhaust'd
         </a>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav right">{renderLinks}</div>

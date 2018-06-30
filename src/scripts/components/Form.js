@@ -13,6 +13,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
+      dropdownOpen: false,
       formValues: {
         toEmail: this.props.toEmail,
         date: "",
@@ -21,7 +22,7 @@ class Form extends Component {
         licensePlate: "",
         vehicleType: "",
         vehicleLocation: "",
-        engineType: "-- Select Your Engine --",
+        engineType: "",
         anonymous: "",
         sendCopy: true
       },
@@ -42,12 +43,22 @@ class Form extends Component {
     this.handleTextInputValidate = this.handleTextInputValidate.bind(this);
     this.validateHuman = this.validateHuman.bind(this);
     this.handleDatePicker = this.handleDatePicker.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+
+    this.form = null;
+    this.setRef = element => {
+      this.form = element;
+    };
   }
 
   componentDidMount() {
     let DayPickerInput = document
       .querySelector(".DayPickerInput input")
       .classList.add("form-control");
+
+    if (this.form) {
+      this.form.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   }
 
   handleSubmit(event) {
@@ -59,6 +70,9 @@ class Form extends Component {
     });
 
     if (findFalse) {
+      this.setState({
+        okSubmit: { ...this.state.okSubmit, [findFalse]: false }
+      });
       return false;
     }
 
@@ -110,21 +124,33 @@ class Form extends Component {
   }
 
   handleInputChange(event) {
-    if (event.target.name === "fromEmail") {
+    let value;
+    const name = event.target.name;
+
+    if (event.target.type === "text" || event.target.type === "email") {
+      value = event.target.value;
+    } else if (event.target.type === "option") {
+      value = event.target.text;
+      this.toggleDropdown();
+    } else if (event.target.type === "checkbox") {
+      value = event.target.checked;
+    }
+
+    if (event.target.type === "email") {
       this.handleEmailValidate(event);
     } else if (event.target.type === "text") {
       this.handleTextInputValidate(event);
     }
-
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
 
     const newState = { ...this.state.formValues, [name]: value };
 
     this.setState({
       formValues: newState
     });
+  }
+
+  toggleDropdown() {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
   handleDatePicker(day) {
@@ -158,7 +184,6 @@ class Form extends Component {
       }
     ];
     const engineDrops = {
-      "-- Select Your Engine --": "disabled",
       Gasoline: "enabled",
       Diesel: "enabled"
     };
@@ -167,246 +192,266 @@ class Form extends Component {
     }
     return (
       //TODO - add Description of emissions (black smoke, grey smoke, quantity of smoke, and when was the most smoke was observed – moving from a stop or while in motion traveling down the road, or at idle). About how long did the emissions last during observation (was it continuous, or heavier initially)
-      <form onSubmit={this.handleSubmit}>
-        <fieldset className="field-set-contact">
-          <div className="form-group row">
-            <label htmlFor="fromEmail" className="col-sm-4 col-form-label">
-              Email<sup className="required">*</sup>
-            </label>
-            <div
-              className={
-                "col-sm-8" +
-                (this.state.okSubmit.fromEmail === true
-                  ? " has-success"
-                  : this.state.okSubmit.fromEmail === false
-                    ? " has-danger"
-                    : "")
-              }
-            >
-              <input
-                name="fromEmail"
-                type="email"
-                className="form-control"
-                id="fromEmail"
-                placeholder="Email"
-                onChange={this.handleInputChange}
-                onBlur={this.handleEmailValidate}
-              />
+      <div ref={this.setRef}>
+        <form className="form-wrapper">
+          <fieldset className="field-set-contact">
+            <div className="form-group row">
+              <label htmlFor="fromEmail" className="col-sm-4 col-form-label">
+                Email<sup className="required">*</sup>
+              </label>
+              <div
+                className={
+                  "col-sm-8" +
+                  (this.state.okSubmit.fromEmail === true
+                    ? " has-success"
+                    : this.state.okSubmit.fromEmail === false
+                      ? " has-danger"
+                      : "")
+                }
+              >
+                <input
+                  name="fromEmail"
+                  type="email"
+                  className="form-control"
+                  id="fromEmail"
+                  placeholder="Email"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleEmailValidate}
+                />
+              </div>
             </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="inputName" className="col-sm-4 col-form-label">
-              Name<sup className="required">*</sup>
-            </label>
-            <div
-              className={
-                "col-sm-8" +
-                (this.state.okSubmit.userName === true
-                  ? " has-success"
-                  : this.state.okSubmit.userName === false ? " has-danger" : "")
-              }
-            >
-              <input
-                name="userName"
-                type="text"
-                className="form-control"
-                id="inputName"
-                placeholder="Your Name"
-                onChange={this.handleInputChange}
-                onBlur={this.handleTextInputValidate}
-              />
+            <div className="form-group row">
+              <label htmlFor="inputName" className="col-sm-4 col-form-label">
+                Name<sup className="required">*</sup>
+              </label>
+              <div
+                className={
+                  "col-sm-8" +
+                  (this.state.okSubmit.userName === true
+                    ? " has-success"
+                    : this.state.okSubmit.userName === false
+                      ? " has-danger"
+                      : "")
+                }
+              >
+                <input
+                  name="userName"
+                  type="text"
+                  className="form-control"
+                  id="inputName"
+                  placeholder="Your Name"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleTextInputValidate}
+                />
+              </div>
             </div>
-          </div>
-        </fieldset>
-        <fieldset className="field-set-vehicle">
-          <div className="form-group row">
-            <label htmlFor="inputPlate" className="col-sm-4 col-form-label">
-              License Plate<sup className="required">*</sup>
-            </label>
-            <div
-              className={
-                "col-sm-8" +
-                (this.state.okSubmit.licensePlate === true
-                  ? " has-success"
-                  : this.state.okSubmit.licensePlate === false
-                    ? " has-danger"
-                    : "")
-              }
-            >
-              <input
-                name="licensePlate"
-                type="text"
-                className="form-control"
-                id="inputPlate"
-                placeholder="Vehicle Plate"
-                onChange={this.handleInputChange}
-                onBlur={this.handleTextInputValidate}
-              />
+          </fieldset>
+          <fieldset className="field-set-vehicle">
+            <div className="form-group row">
+              <label htmlFor="inputPlate" className="col-sm-4 col-form-label">
+                License Plate<sup className="required">*</sup>
+              </label>
+              <div
+                className={
+                  "col-sm-8" +
+                  (this.state.okSubmit.licensePlate === true
+                    ? " has-success"
+                    : this.state.okSubmit.licensePlate === false
+                      ? " has-danger"
+                      : "")
+                }
+              >
+                <input
+                  name="licensePlate"
+                  type="text"
+                  className="form-control"
+                  id="inputPlate"
+                  placeholder="Vehicle Plate"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleTextInputValidate}
+                />
+              </div>
             </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="inputVehicle" className="col-sm-4 col-form-label">
-              Vehicle Make/Model<sup className="required">*</sup>
-            </label>
-            <div
-              className={
-                "col-sm-8" +
-                (this.state.okSubmit.vehicleType === true
-                  ? " has-success"
-                  : this.state.okSubmit.vehicleType === false
-                    ? " has-danger"
-                    : "")
-              }
-            >
-              <input
-                name="vehicleType"
-                type="text"
-                className="form-control"
-                id="inputVehicle"
-                placeholder="Vehicle Type"
-                onChange={this.handleInputChange}
-                onBlur={this.handleTextInputValidate}
-              />
+            <div className="form-group row">
+              <label htmlFor="inputVehicle" className="col-sm-4 col-form-label">
+                Vehicle Make/Model<sup className="required">*</sup>
+              </label>
+              <div
+                className={
+                  "col-sm-8" +
+                  (this.state.okSubmit.vehicleType === true
+                    ? " has-success"
+                    : this.state.okSubmit.vehicleType === false
+                      ? " has-danger"
+                      : "")
+                }
+              >
+                <input
+                  name="vehicleType"
+                  type="text"
+                  className="form-control"
+                  id="inputVehicle"
+                  placeholder="Vehicle Type"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleTextInputValidate}
+                />
+              </div>
             </div>
-          </div>
+            <div className="form-group row">
+              <label
+                htmlFor="inputLocation"
+                className="col-sm-4 col-form-label"
+              >
+                Location<sup className="required">*</sup>
+              </label>
+              <div
+                className={
+                  "col-sm-8" +
+                  (this.state.okSubmit.vehicleLocation === true
+                    ? " has-success"
+                    : this.state.okSubmit.vehicleLocation === false
+                      ? " has-danger"
+                      : "")
+                }
+              >
+                <input
+                  name="vehicleLocation"
+                  type="text"
+                  className="form-control"
+                  id="inputLocation"
+                  placeholder="Vehicle Location"
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleTextInputValidate}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="engineType" className="col-sm-4 col-form-label">
+                Engine
+              </label>
+              <div className="dropdown-wrapper col-sm-8">
+                <Button
+                  buttonName="engine"
+                  classes="btn btn-fine btn-gray dropdown-select button-engine"
+                  buttonClick={this.toggleDropdown}
+                  text={
+                    this.state.formValues.engineType
+                      ? this.state.formValues.engineType
+                      : "Select Your Engine"
+                  }
+                  type="button"
+                />
+                {this.state.dropdownOpen && (
+                  <div className={"dropdown-content engine"}>
+                    {Object.keys(engineDrops).map((name, i) => {
+                      return (
+                        <a
+                          type="option"
+                          key={i}
+                          name="engineType"
+                          className="option"
+                          onClick={this.handleInputChange}
+                        >
+                          {name}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="inputDate" className="col-sm-4 col-form-label">
+                Date
+              </label>
+              <div className="col-sm-8">
+                <DayPickerInput
+                  className="form-control"
+                  format="M/D/YYYY"
+                  placeholder="MM/DD/YYYY"
+                  name="date"
+                  className="form-control"
+                  onDayChange={day => {
+                    this.handleDatePicker(day);
+                  }}
+                />
+              </div>
+            </div>
+          </fieldset>
+          <fieldset className="field-set-other">
+            <div className="form-group row">
+              <label className="col-sm-4">Submit as Anonymous??</label>
+              <div className="col-sm-8">
+                <div className="form-check">
+                  <label className="form-check-label">
+                    <input
+                      name="anonymous"
+                      className="form-check-input"
+                      id="inputAnonymous"
+                      type="checkbox"
+                      onChange={this.handleInputChange}
+                    />{" "}
+                    Yes
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-sm-4">Receive a Copy?</label>
+              <div className="col-sm-8">
+                <div className="form-check">
+                  <label className="form-check-label">
+                    <input
+                      name="sendCopy"
+                      className="form-check-input"
+                      id="inputReceiveCopy"
+                      type="checkbox"
+                      checked={this.state.formValues.sendCopy}
+                      onChange={this.handleInputChange}
+                    />{" "}
+                    Yes
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <p>And we never save or share your information</p>
           <div className="form-group row">
-            <label htmlFor="inputLocation" className="col-sm-4 col-form-label">
-              Location
+            <label
+              htmlFor="disabledValidation"
+              className="col-sm-4 col-form-label"
+            >
+              Human?
             </label>
             <div
               className={
-                "col-sm-8" +
-                (this.state.okSubmit.vehicleLocation === true
-                  ? " has-success"
-                  : this.state.okSubmit.vehicleLocation === false
-                    ? " has-danger"
-                    : "")
+                "col-sm-8" + (!this.state.disabled ? " has-success" : "")
               }
             >
               <input
                 name="vehicleLocation"
                 type="text"
                 className="form-control"
-                id="inputLocation"
-                placeholder="Vehicle Location"
-                onChange={this.handleInputChange}
-                onBlur={this.handleTextInputValidate}
+                id="disabledValidation"
+                placeholder="4 + 5 = ?"
+                onChange={this.validateHuman}
               />
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="engineType" className="col-sm-4 col-form-label">
-              Engine
-            </label>
-            <select
-              className="dropdown-engine-select form-control"
-              value={this.state.formValues.engineType}
-              name="engineType"
-              onChange={this.handleInputChange}
-            >
-              {Object.keys(engineDrops).map(function(name, index) {
-                return (
-                  <option
-                    key={index}
-                    value={name}
-                    disabled={engineDrops[name] === "disabled" ? true : null}
-                  >
-                    {name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="inputDate" className="col-sm-4 col-form-label">
-              Date
-            </label>
-            <div className="col-sm-8">
-              <DayPickerInput
-                className="form-control"
-                format="M/D/YYYY"
-                placeholder="MM/DD/YYYY"
-                name="date"
-                className="form-control"
-                onDayChange={day => {
-                  this.handleDatePicker(day);
-                }}
+            <div className="col-sm-12 flex center">
+              <Button
+                text={buttons[0].text}
+                classes={buttons[0].classes}
+                ibuttonName="submitForm"
+                buttonName={null}
+                type="button"
+                buttonClick={this.handleSubmit}
               />
             </div>
           </div>
-        </fieldset>
-        <fieldset className="field-set-other">
-          <div className="form-group row">
-            <label className="col-sm-4">Submit as Anonymous??</label>
-            <div className="col-sm-8">
-              <div className="form-check">
-                <label className="form-check-label">
-                  <input
-                    name="anonymous"
-                    className="form-check-input"
-                    id="inputAnonymous"
-                    type="checkbox"
-                    onChange={this.handleInputChange}
-                  />{" "}
-                  Yes
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-sm-4">Receive a Copy?</label>
-            <div className="col-sm-8">
-              <div className="form-check">
-                <label className="form-check-label">
-                  <input
-                    name="sendCopy"
-                    className="form-check-input"
-                    id="inputReceiveCopy"
-                    type="checkbox"
-                    checked={this.state.formValues.sendCopy}
-                    onChange={this.handleInputChange}
-                  />{" "}
-                  Yes
-                </label>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <p>And we never save or share your information</p>
-        <div className="form-group row">
-          <label
-            htmlFor="disabledValidation"
-            className="col-sm-4 col-form-label"
-          >
-            Human?
-          </label>
-          <div
-            className={
-              "col-sm-8" + (!this.state.disabled ? " has-success" : "")
-            }
-          >
-            <input
-              name="vehicleLocation"
-              type="text"
-              className="form-control"
-              id="disabledValidation"
-              placeholder="4 + 5 = ?"
-              onChange={this.validateHuman}
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-12 flex center">
-            <Button
-              text={buttons[0].text}
-              classes={buttons[0].classes}
-              id="submitForm"
-              buttonName={null}
-              type="submit"
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }

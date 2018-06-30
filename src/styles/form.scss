@@ -16,10 +16,10 @@
 
   .dropdown-wrapper {
     display: flex;
-    justify-content: center;
-
-    .dropdown-state-select {
+    .dropdown-select {
       cursor: pointer;
+      display: block;
+      position: relative;
       &:after {
         display: inline-block;
         width: 0;
@@ -31,11 +31,14 @@
         border-right: 0.3em solid transparent;
         border-left: 0.3em solid transparent;
       }
+      &.button-engine {
+        width: inherit;
+        font-size: inherit;
+        padding: 4px;
+      }
     }
 
     .dropdown-content {
-      display: none;
-      position: absolute;
       background-color: #f9f9f9;
       min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -43,21 +46,19 @@
       max-height: 20vh;
       overflow: scroll;
       cursor: pointer;
+      position: absolute;
+      width: 240px;
       a {
         color: black;
         padding: 12px 16px;
         text-decoration: none;
         display: block;
       }
-
-      &.open {
-        display: inline-block;
-        align-self: flex-start;
-        margin-top: 54px;
-
-        .dropbtn {
-          background-color: #3e8e41;
-        }
+      &.state {
+        top: 54px;
+      }
+      &.engine {
+        top: 36px;
       }
     }
   }
